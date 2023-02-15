@@ -15,7 +15,7 @@ public:
     };
 
     Ship();
-    Ship(Type type, std::vector<std::shared_ptr<Cell>> position);
+    Ship(Type type, std::vector<std::shared_ptr<Cell>> position, bool isHorizontal);
     ~Ship();
 
     std::unique_ptr<Ship> create(Type type, std::vector<std::shared_ptr<Cell>> position);

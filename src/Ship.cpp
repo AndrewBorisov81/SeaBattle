@@ -9,7 +9,7 @@ Ship::Ship()
 
 }
 
-Ship::Ship(Type type, std::vector<std::shared_ptr<Cell>> position) {
+Ship::Ship(Type type, std::vector<std::shared_ptr<Cell>> position, bool isHorizontal) {
 
 }
 
