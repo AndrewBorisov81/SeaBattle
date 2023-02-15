@@ -7,6 +7,8 @@
 class GameBoard {
 public:
     enum class Owner{ player, computer, player1, player2 };
+    // Input ship position
+    enum class InputMode{ manual, autoRandom };
 
     GameBoard();
     ~GameBoard();
@@ -31,6 +33,7 @@ public:
 private:
     std::vector<std::shared_ptr<Cell>> m_board;
     Owner m_owner;
+    InputMode m_inputMode;
 
     int m_columns;
     int m_rows;
