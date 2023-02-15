@@ -1,14 +1,28 @@
 #include "Ship.h"
 
-Ship::Ship() {
+Ship::Ship()
+    : m_type{Type::singleDeckShip},
+      m_isDestroyed{false},
+      m_isHorizontal{true},
+      m_health{0}
+{
 
 }
+
+Ship::Ship(Type type, std::vector<std::shared_ptr<Cell>> position) {
+
+}
+
 Ship::~Ship() {
 
 }
 
 void Ship::hit() {
-
+    m_health--;
+    
+    if(m_health <= 0) {
+        destroy();
+    }
 }
 
 void Ship::setType(Type type) {
@@ -19,10 +33,14 @@ Ship::Type Ship::getType() const {
     return m_type;
 }
 
-void Ship::destoryed(bool destroyed) {
-    m_isDestroyed = destroyed;
+void Ship::destroy() {
+    m_isDestroyed = true;
 }
 
 bool Ship::isDestoryed() const {
     return m_isDestroyed;
+}
+
+bool Ship::isHorizontal() const {
+    return m_isHorizontal;
 }

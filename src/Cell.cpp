@@ -1,6 +1,12 @@
 #include "Cell.h"
 
-Cell::Cell() {
+Cell::Cell() : m_row{0}, m_column{0}, m_type{Type::Empty} {
+
+}
+
+Cell::Cell(int row, int col)
+    : m_row{row}, m_column{col}, m_type{Type::Empty}
+{
 
 }
 
@@ -30,4 +36,12 @@ void Cell::setEmpty(bool empty) {
 
 bool Cell::isEmpty() const {
     return m_isEmpty;
+}
+
+void Cell::setType(Type type) {
+    m_type = type;
+}
+    
+Cell::Type Cell::getType() const {
+    return m_type;
 }

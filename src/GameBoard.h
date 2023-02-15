@@ -19,7 +19,7 @@ public:
     void show();
 
     void setupShips();
-    std::unique_ptr<Cell> getBoardSpace(int row, int col, int rows, int columns);
+    std::shared_ptr<Cell> getBoardSpace(int row, int col, int rows, int columns);
 
     void attack(int row, int col);
 
@@ -29,7 +29,7 @@ public:
     int getRows() const { return m_rows; }
 
 private:
-    std::vector<std::unique_ptr<Cell>> m_board;
+    std::vector<std::shared_ptr<Cell>> m_board;
     Owner m_owner;
 
     int m_columns;
