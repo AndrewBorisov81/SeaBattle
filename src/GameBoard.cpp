@@ -14,6 +14,14 @@ std::unique_ptr<GameBoard> GameBoard::create() {
     return std::make_unique<GameBoard>();
 }
 
+void GameBoard::init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner) {
+     m_columns = fieldData.columns;
+     m_rows = fieldData.rows;
+     m_width = fieldData.rowWidth;
+     m_height = fieldData.rowHeight;
+     m_shipData = shipsData;
+}
+
 void GameBoard::deleteBoard() {
 
 }

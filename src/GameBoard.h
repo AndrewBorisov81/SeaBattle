@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Cell.h"
+#include "UtilityData.h"
+
 #include <memory>
 #include <vector>
-#include "Cell.h"
 
 class GameBoard {
 public:
@@ -14,6 +16,7 @@ public:
     ~GameBoard();
 
     static std::unique_ptr<GameBoard> create();
+    void init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner);
     // Function for removing the playing and feeling memory
     void deleteBoard();
 
@@ -33,6 +36,7 @@ public:
 
 private:
     std::vector<std::shared_ptr<Cell>> m_board;
+    std::vector<ShipData> m_shipData;
     Owner m_owner;
     InputMode m_inputMode;
 
