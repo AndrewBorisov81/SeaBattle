@@ -35,6 +35,7 @@ void GameBoard::setupShips() {
     m_board.reserve(numElem);
 }
 
+// ???return const ref
 std::shared_ptr<Cell> GameBoard::getBoardSpace(int row, int col, int rows, int columns) {
     int elemIndex = (m_board.size()/columns) * row + col; 
     // Check the boundaries of the array
@@ -43,4 +44,8 @@ std::shared_ptr<Cell> GameBoard::getBoardSpace(int row, int col, int rows, int c
     } else {
         return m_board.at(elemIndex);
     }
+}
+
+std::vector<std::shared_ptr<Cell>> GameBoard::getShipPosition(std::shared_ptr<Cell> begin, std::shared_ptr<Cell> end) {
+    
 }
