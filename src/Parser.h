@@ -13,11 +13,11 @@ struct ShipData {
   int type;
   int initRow;
   int initColumn;
-  bool direction;
+  int direction;
 };
 
 class Parser {
 public:
     Parser();
-    void parse(std::string str);
+    std::tuple<int, FieldData, std::vector<ShipData>> parse(const std::string& str);
 };

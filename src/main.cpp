@@ -24,6 +24,5 @@ int main()
    std::string gameLevel {"1; 12, 12, 25, 25; 4, 5, 5, 0; 3, 1, 2, 1;  2, 7, 1, 0; 1, 12, 12, 0"};
 
    Parser parser;
-   parser.parse(gameLevel);
-
+   std::tuple<int, FieldData, std::vector<ShipData>> levelParseddData = parser.parse(gameLevel);
 }
