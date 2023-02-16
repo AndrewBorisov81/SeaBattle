@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cell.h"
+#include "Ship.h"
 #include "UtilityData.h"
 
 #include <memory>
@@ -36,6 +37,7 @@ public:
 
 private:
     std::vector<std::shared_ptr<Cell>> m_board;
+    std::vector<std::shared_ptr<Ship>> m_ships;
     std::vector<ShipData> m_shipData;
     Owner m_owner;
     InputMode m_inputMode;

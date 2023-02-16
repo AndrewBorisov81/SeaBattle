@@ -1,8 +1,8 @@
 #include "GameBoard.h"
 
 GameBoard::GameBoard()
-    : m_columns{15}, m_rows{15},
-      m_height{15}, m_width{15} {
+    : m_columns{0}, m_rows{0},
+      m_height{0}, m_width{0} {
 
 }
 
