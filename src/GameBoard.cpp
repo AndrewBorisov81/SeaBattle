@@ -54,6 +54,7 @@ std::shared_ptr<Cell> GameBoard::getBoardSpace(int row, int col, int rows, int c
     }
 }
 
-std::vector<std::shared_ptr<Cell>> GameBoard::getShipPosition(std::shared_ptr<Cell> begin, std::shared_ptr<Cell> end) {
-    
+// ???return const ref
+std::vector<std::shared_ptr<Cell>> GameBoard::getShipPosition(const Position& pos, int numberDecks, bool horizontal) {
+     return {};   
 }

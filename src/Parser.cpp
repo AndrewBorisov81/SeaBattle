@@ -7,7 +7,6 @@ Parser::Parser() {
 }
 
 std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::string& str) {
-    //std::tuple<int, FieldData, std::vector<ShipData>> parsedlevelData;
     std::queue<std::string> tokens;
     std::string levelData = str;
 
@@ -27,6 +26,7 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
     int level = std::stoi(tokens.front());
     tokens.pop();
 
+    enum class FieldAttr{rows = 0, columns, width, height};
     FieldData fieldData;
     std::vector<int> parsedFieldData;
     std::string parseFieldData = tokens.front();
@@ -43,11 +43,14 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
     parseFieldData.clear();
     
     if(parsedFieldData.size() >= 4) {
-        fieldData = {parsedFieldData.at(0), parsedFieldData.at(1), parsedFieldData.at(2), parsedFieldData.at(3)};
+        fieldData = {parsedFieldData.at(static_cast<int>(FieldAttr::rows)), 
+        parsedFieldData.at(static_cast<int>(FieldAttr::columns)), 
+        parsedFieldData.at(static_cast<int>(FieldAttr::width)),
+        parsedFieldData.at(static_cast<int>(FieldAttr::height))};
     }
 
     std::vector<ShipData> shipsData;
-    
+    enum class ShipAttr{type = 0, initRow, initColumn, direction};
     while(!tokens.empty()){
         std::string parseShipData = tokens.front();
         tokens.pop();
@@ -63,9 +66,28 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
         pos = 0;
         parseShipData.clear();
         if(parsedShipData.size() >= 4) {
-            ShipData shipData{parsedShipData.at(0), parsedShipData.at(1), parsedShipData.at(2), parsedShipData.at(3)};
+            ShipData shipData{parsedShipData.at(static_cast<int>(ShipAttr::type)), 
+            parsedShipData.at(static_cast<int>(ShipAttr::initRow)), 
+            parsedShipData.at(static_cast<int>(ShipAttr::initColumn)), 
+            parsedShipData.at(static_cast<int>(ShipAttr::direction))};
             shipsData.push_back(shipData);
         }
     }
     return std::tuple<int, FieldData, std::vector<ShipData>>{level, fieldData, shipsData};
+}
+
+void Parser::parseAlgorithm(const std::string& stringToParse, const std::string& delimeter, std::queue<int>& returnParsedData) {
+    std::queue<std::string> tokens;
+    std::string stringData = stringToParse;
+
+    size_t pos = 0;
+    std::string token;
+    while ((pos = stringData.find(delimeter)) != std::string::npos) {
+        token = stringData.substr(0, pos);
+        tokens.push(token);
+        stringData.erase(0, pos + delimeter.length());
+    }
+    token = stringData.substr(0, stringData.length());
+    tokens.push(token);
+    bool stop = true;
 }
