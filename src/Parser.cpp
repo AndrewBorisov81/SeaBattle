@@ -18,35 +18,44 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
         tokens.push(token);
         levelData.erase(0, pos + delimeter.length());
     }
-    token = levelData.substr(0, levelData.length());
-    tokens.push(token);
+    if(!levelData.empty()) {
+        token = levelData.substr(0, levelData.length());
+        tokens.push(token);
+    }
     pos = 0;
     token.clear();
 
-    int level = std::stoi(tokens.front());
-    tokens.pop();
+    int level{0};
+    if (!tokens.empty()) {
+        level = std::stoi(tokens.front());
+        tokens.pop();
+    }
 
     enum class FieldAttr{rows = 0, columns, width, height};
-    FieldData fieldData;
-    std::vector<int> parsedFieldData;
-    std::string parseFieldData = tokens.front();
-    tokens.pop();
-    delimeter = ",";
-    while ((pos = parseFieldData.find(delimeter)) != std::string::npos) {
-        token = parseFieldData.substr(0, pos);
-        parsedFieldData.push_back(std::stoi(token));
-        parseFieldData.erase(0, pos + delimeter.length());
-    }
-    token = parseFieldData.substr(0, str.length());
-    parsedFieldData.push_back(std::stoi(token));
-    pos = 0;
-    parseFieldData.clear();
+    FieldData fieldData = {};
+    if(!tokens.empty()) {
+        std::vector<int> parsedFieldData;
+        std::string parseFieldData = tokens.front();
+        tokens.pop();
+        delimeter = ",";
+        while ((pos = parseFieldData.find(delimeter)) != std::string::npos) {
+            token = parseFieldData.substr(0, pos);
+            parsedFieldData.push_back(std::stoi(token));
+            parseFieldData.erase(0, pos + delimeter.length());
+        }
+        if(!parseFieldData.empty()) {
+            token = parseFieldData.substr(0, str.length());
+            parsedFieldData.push_back(std::stoi(token));
+        }
+        pos = 0;
+        parseFieldData.clear();
     
-    if(parsedFieldData.size() >= 4) {
-        fieldData = {parsedFieldData.at(static_cast<int>(FieldAttr::rows)), 
-        parsedFieldData.at(static_cast<int>(FieldAttr::columns)), 
-        parsedFieldData.at(static_cast<int>(FieldAttr::width)),
-        parsedFieldData.at(static_cast<int>(FieldAttr::height))};
+        if(parsedFieldData.size() >= 4) {
+            fieldData = {parsedFieldData.at(static_cast<int>(FieldAttr::rows)), 
+            parsedFieldData.at(static_cast<int>(FieldAttr::columns)), 
+            parsedFieldData.at(static_cast<int>(FieldAttr::width)),
+            parsedFieldData.at(static_cast<int>(FieldAttr::height))};
+        }
     }
 
     std::vector<ShipData> shipsData;
@@ -61,8 +70,10 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
             parsedShipData.push_back(std::stoi(token));
             parseShipData.erase(0, pos + delimeter.length());
         }
-        token = parseShipData.substr(0, str.length());
-        parsedShipData.push_back(std::stoi(token));
+        if(!parseShipData.empty()) {
+            token = parseShipData.substr(0, str.length());
+            parsedShipData.push_back(std::stoi(token));
+        }
         pos = 0;
         parseShipData.clear();
         if(parsedShipData.size() >= 4) {
@@ -87,7 +98,8 @@ void Parser::parseAlgorithm(const std::string& stringToParse, const std::string&
         tokens.push(token);
         stringData.erase(0, pos + delimeter.length());
     }
-    token = stringData.substr(0, stringData.length());
-    tokens.push(token);
-    bool stop = true;
+    if (!stringData.empty()) {
+        token = stringData.substr(0, stringData.length());
+        tokens.push(token);
+    }
 }
