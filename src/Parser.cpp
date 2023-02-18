@@ -9,23 +9,9 @@ Parser::Parser() {
 std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::string& str) {
     std::queue<std::string> tokens;
     std::string levelData = str;
-
     std::string delimeter = ";";
-    size_t pos = 0;
-    std::string token;
-    while ((pos = levelData.find(delimeter)) != std::string::npos) {
-        token = levelData.substr(0, pos);
-        tokens.push(token);
-        levelData.erase(0, pos + delimeter.length());
-    }
-    if(!levelData.empty()) {
-        token = levelData.substr(0, levelData.length());
-        tokens.push(token);
-    }
-    pos = 0;
-    token.clear();
-
-    int level{0};
+    parseAlgorithm(levelData, delimeter, tokens);
+    int level{};
     if (!tokens.empty()) {
         level = std::stoi(tokens.front());
         tokens.pop();
@@ -35,21 +21,16 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
     FieldData fieldData = {};
     if(!tokens.empty()) {
         std::vector<int> parsedFieldData;
+        std::queue<std::string> qparsedFieldData;
         std::string parseFieldData = tokens.front();
         tokens.pop();
         delimeter = ",";
-        while ((pos = parseFieldData.find(delimeter)) != std::string::npos) {
-            token = parseFieldData.substr(0, pos);
-            parsedFieldData.push_back(std::stoi(token));
-            parseFieldData.erase(0, pos + delimeter.length());
+        parseAlgorithm(parseFieldData, delimeter, qparsedFieldData);
+        while(!qparsedFieldData.empty()) {
+            std::string str = qparsedFieldData.front();
+            parsedFieldData.push_back(std::stoi(str));
+            qparsedFieldData.pop();
         }
-        if(!parseFieldData.empty()) {
-            token = parseFieldData.substr(0, str.length());
-            parsedFieldData.push_back(std::stoi(token));
-        }
-        pos = 0;
-        parseFieldData.clear();
-    
         if(parsedFieldData.size() >= 4) {
             fieldData = {parsedFieldData.at(static_cast<int>(FieldAttr::rows)), 
             parsedFieldData.at(static_cast<int>(FieldAttr::columns)), 
@@ -65,17 +46,13 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
         tokens.pop();
         delimeter = ",";
         std::vector<int> parsedShipData;
-        while ((pos = parseShipData.find(delimeter)) != std::string::npos) {
-            token = parseShipData.substr(0, pos);
-            parsedShipData.push_back(std::stoi(token));
-            parseShipData.erase(0, pos + delimeter.length());
+        std::queue<std::string> qparsedShipData;
+        parseAlgorithm(parseShipData, delimeter, qparsedShipData);
+        while(!qparsedShipData.empty()) {
+            std::string str = qparsedShipData.front();
+            parsedShipData.push_back(std::stoi(str));
+            qparsedShipData.pop();
         }
-        if(!parseShipData.empty()) {
-            token = parseShipData.substr(0, str.length());
-            parsedShipData.push_back(std::stoi(token));
-        }
-        pos = 0;
-        parseShipData.clear();
         if(parsedShipData.size() >= 4) {
             ShipData shipData{parsedShipData.at(static_cast<int>(ShipAttr::type)), 
             parsedShipData.at(static_cast<int>(ShipAttr::initRow)), 
@@ -87,7 +64,8 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
     return std::tuple<int, FieldData, std::vector<ShipData>>{level, fieldData, shipsData};
 }
 
-void Parser::parseAlgorithm(const std::string& stringToParse, const std::string& delimeter, std::queue<int>& returnParsedData) {
+void Parser::parseAlgorithm(const std::string& stringToParse, 
+                            const std::string& delimeter, std::queue<std::string>& returnParsedData) {
     std::queue<std::string> tokens;
     std::string stringData = stringToParse;
 
@@ -102,4 +80,6 @@ void Parser::parseAlgorithm(const std::string& stringToParse, const std::string&
         token = stringData.substr(0, stringData.length());
         tokens.push(token);
     }
+
+    returnParsedData = tokens;
 }
