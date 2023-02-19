@@ -14,10 +14,13 @@ public:
     enum class InputMode{ manual, autoRandom };
 
     GameBoard();
+    GameBoard(const FieldData& fieldData,
+              const std::vector<ShipData>& shipData, Owner owner);
     ~GameBoard();
 
-    static std::unique_ptr<GameBoard> create();
-    void init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner);
+    static std::unique_ptr<GameBoard> create(const FieldData& fieldData,
+                                             const std::vector<ShipData>& shipData, Owner owner);
+    //void init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner);
     // Function for removing the playing and feeling memory
     void deleteBoard();
 
@@ -36,14 +39,14 @@ public:
     int getRows() const { return m_rows; }
 
 private:
+    int m_rows;
+    int m_columns;
+    int m_width;
+    int m_height;
+
     std::vector<std::shared_ptr<Cell>> m_board;
     std::vector<std::shared_ptr<Ship>> m_ships;
     std::vector<ShipData> m_shipData;
     Owner m_owner;
     InputMode m_inputMode;
-
-    int m_columns;
-    int m_rows;
-    int m_height;
-    int m_width;
 };

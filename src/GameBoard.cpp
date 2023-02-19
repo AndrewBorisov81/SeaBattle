@@ -1,26 +1,43 @@
 #include "GameBoard.h"
 
 GameBoard::GameBoard()
-    : m_columns{0}, m_rows{0},
-      m_height{0}, m_width{0} {
+    : m_rows{0}, m_columns{0},
+      m_width{0}, m_height{0}
+{
 
+}
+
+GameBoard::GameBoard(const FieldData& fieldData,
+                     const std::vector<ShipData>& shipData, Owner owner)
+    : m_rows{fieldData.rows}, m_columns{fieldData.columns}, 
+      m_width{fieldData.rowWidth}, m_height{fieldData.rowHeight},
+      m_shipData{shipData}, m_owner{owner}
+{
+      
+    for (int row = 0; row < m_rows; row++) {
+        for (int col = 0; col < m_columns; col++) {
+            m_board.emplace_back(std::make_shared<Cell>());
+        }
+    }
+      setupShips();
 }
 
 GameBoard::~GameBoard() {
 
 }
 
-std::unique_ptr<GameBoard> GameBoard::create() {
-    return std::make_unique<GameBoard>();
+std::unique_ptr<GameBoard> GameBoard::create(const FieldData& fieldData, 
+                                             const std::vector<ShipData>& shipData, Owner owner) {
+    return std::make_unique<GameBoard>(fieldData, shipData, owner);
 }
 
-void GameBoard::init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner) {
+/*void GameBoard::init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner) {
      m_columns = fieldData.columns;
      m_rows = fieldData.rows;
      m_width = fieldData.rowWidth;
      m_height = fieldData.rowHeight;
      m_shipData = shipsData;
-}
+}*/
 
 void GameBoard::deleteBoard() {
 
@@ -56,5 +73,18 @@ std::shared_ptr<Cell> GameBoard::getBoardSpace(int row, int col, int rows, int c
 
 // ???return const ref
 std::vector<std::shared_ptr<Cell>> GameBoard::getShipPosition(const Position& pos, int numberDecks, bool horizontal) {
-     return {};   
+    std::vector<std::shared_ptr<Cell>> shipPosition;
+    for(int i = 0; i < numberDecks; i++) {
+        std::shared_ptr<Cell> cell = std::make_shared<Cell>();
+        if (horizontal) {
+            cell->setRow(pos.column);
+            cell->setColumn(pos.row + i);
+        } else {
+            cell->setRow(pos.column + i);
+            cell->setColumn(pos.row);
+        }
+        shipPosition.push_back(cell);
+    }
+    return shipPosition;
 }
+

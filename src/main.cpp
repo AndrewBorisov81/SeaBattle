@@ -29,7 +29,9 @@ int main()
    std::tuple<int, FieldData, std::vector<ShipData>> levelParsedData = parser.parse(gameLevel);
 
    enum class InitData{field = 1, ships};
-   std::unique_ptr<GameBoard> gameBoard = GameBoard::create();
-   gameBoard->init(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
-                  std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);
+   std::unique_ptr<GameBoard> gameBoard 
+       = GameBoard::create(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
+                           std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);
+   /*gameBoard->init(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
+                  std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);*/
 }
