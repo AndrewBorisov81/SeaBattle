@@ -19,7 +19,7 @@ public:
     ~GameBoard();
 
     static std::unique_ptr<GameBoard> create(const FieldData& fieldData,
-                                             const std::vector<ShipData>& shipData, Owner owner);
+                                             const std::vector<ShipData>& shipsData, Owner owner);
     //void init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner);
     // Function for removing the playing and feeling memory
     void deleteBoard();
@@ -27,8 +27,9 @@ public:
     void clear();
     void show();
 
+    void setupCells();
     void setupShips();
-    std::shared_ptr<Cell> getBoardSpace(int row, int col, int rows, int columns);
+    const std::shared_ptr<Cell>& getBoardSpace(int row, int col);
     bool getShipPosition(const Position& pos, int numberDecks, bool horizontal,
         std::vector<std::shared_ptr<Cell>>& shipPosition);
 
@@ -47,7 +48,7 @@ private:
 
     std::vector<std::shared_ptr<Cell>> m_board;
     std::vector<std::shared_ptr<Ship>> m_ships;
-    std::vector<ShipData> m_shipData;
+    std::vector<ShipData> m_shipsData;
     Owner m_owner;
     InputMode m_inputMode;
 };

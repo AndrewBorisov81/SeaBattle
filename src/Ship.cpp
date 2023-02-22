@@ -17,6 +17,11 @@ Ship::~Ship() {
 
 }
 
+std::unique_ptr<Ship> Ship::create(Type type, 
+        std::vector<std::shared_ptr<Cell>> position, bool isHorizontal) {
+    return std::make_unique<Ship>(type, position, isHorizontal);
+}
+
 void Ship::hit() {
     m_health--;
     

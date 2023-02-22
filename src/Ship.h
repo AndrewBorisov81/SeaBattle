@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Cell.h"
+
 #include <memory>
 #include <vector>
-
-class Cell;
   
 class Ship {
 public:
@@ -18,7 +18,8 @@ public:
     Ship(Type type, std::vector<std::shared_ptr<Cell>> position, bool isHorizontal);
     ~Ship();
 
-    static std::unique_ptr<Ship> create(Type type, std::vector<std::shared_ptr<Cell>> position);
+    static std::unique_ptr<Ship> create(Type type, 
+        std::vector<std::shared_ptr<Cell>> position, bool isHorizontal);
 
     void hit();
 

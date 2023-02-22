@@ -11,15 +11,10 @@ GameBoard::GameBoard(const FieldData& fieldData,
                      const std::vector<ShipData>& shipData, Owner owner)
     : m_rows{fieldData.rows}, m_columns{fieldData.columns}, 
       m_width{fieldData.rowWidth}, m_height{fieldData.rowHeight},
-      m_shipData{shipData}, m_owner{owner}
+      m_shipsData{shipData}, m_owner{owner}
 {
-      
-    for (int row = 0; row < m_rows; row++) {
-        for (int col = 0; col < m_columns; col++) {
-            m_board.emplace_back(std::make_shared<Cell>());
-        }
-    }
-      setupShips();
+    setupCells();
+    setupShips();
 }
 
 GameBoard::~GameBoard() {
@@ -27,8 +22,8 @@ GameBoard::~GameBoard() {
 }
 
 std::unique_ptr<GameBoard> GameBoard::create(const FieldData& fieldData, 
-                                             const std::vector<ShipData>& shipData, Owner owner) {
-    return std::make_unique<GameBoard>(fieldData, shipData, owner);
+                                             const std::vector<ShipData>& shipsData, Owner owner) {
+    return std::make_unique<GameBoard>(fieldData, shipsData, owner);
 }
 
 /*void GameBoard::init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner) {
@@ -55,20 +50,27 @@ void GameBoard::attack(int x, int y) {
 
 }
 
-void GameBoard::setupShips() {
+void GameBoard::setupCells() {
     int numElem = m_rows * m_columns;
     m_board.reserve(numElem);
+
+    for(int i = 0; i < m_rows; i++) {
+        for (int j = 0; j  < m_columns; j++) {
+           std::shared_ptr<Cell> cell = std::make_shared<Cell>(i, j);
+           m_board.emplace_back(cell);
+        }
+    }
 }
 
-// ???return const ref
-std::shared_ptr<Cell> GameBoard::getBoardSpace(int row, int col, int rows, int columns) {
-    int elemIndex = (m_board.size()/columns) * row + col; 
-    // Check the boundaries of the array
-    if(row < 0 || row >= m_rows || col < 0 || col >= m_columns) {
-        return nullptr;
-    } else {
-        return m_board.at(elemIndex);
+void GameBoard::setupShips() {
+    for(auto shipData: m_shipsData) {
+        std::shared_ptr<Ship> ship = std::make_unique<Ship>();
     }
+}
+
+const std::shared_ptr<Cell>& GameBoard::getBoardSpace(int row, int col) {
+    int index = (m_board.size()/m_columns) * row + col; 
+    return m_board.at(index);
 }
 
  bool GameBoard::getShipPosition(const Position& pos, 
@@ -92,4 +94,3 @@ std::shared_ptr<Cell> GameBoard::getBoardSpace(int row, int col, int rows, int c
     }
     return true;
 }
-
