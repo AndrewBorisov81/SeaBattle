@@ -35,16 +35,13 @@ public:
 
     void attack(int row, int col);
 
-    int getWidth() const { return m_width; }
-    int getHeight() const { return m_height; }
-    int getColumns() const { return m_columns; }
-    int getRows() const { return m_rows; }
+    int getWidth() const { return m_fieldData.width; }
+    int getHeight() const { return m_fieldData.height; }
+    int getColumns() const { return m_fieldData.columns; }
+    int getRows() const { return m_fieldData.rows; }
 
 private:
-    int m_rows;
-    int m_columns;
-    int m_width;
-    int m_height;
+    FieldData m_fieldData;
 
     std::vector<std::shared_ptr<Cell>> m_board;
     std::vector<std::shared_ptr<Ship>> m_ships;

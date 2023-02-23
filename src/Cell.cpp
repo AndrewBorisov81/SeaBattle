@@ -1,12 +1,14 @@
 #include "Cell.h"
 
-Cell::Cell() : m_row{0}, m_column{0}, m_type{Type::Empty} {
+Cell::Cell() 
+    : m_row{0}, m_column{0}, 
+      m_isEmpty{true}, m_type{Type::Empty} {
 
 }
 
 Cell::Cell(int row, int col)
-    : m_row{row}, m_column{col}, m_type{Type::Empty}
-{
+    : m_row{row}, m_column{col},
+      m_isEmpty{true}, m_type{Type::Empty} {
 
 }
 
@@ -22,7 +24,7 @@ int Cell::getRow() const {
     return m_row;
 }
 
-void Cell::setColumn(int col){
+void Cell::setColumn(int col) {
    m_column = col;
 }
 

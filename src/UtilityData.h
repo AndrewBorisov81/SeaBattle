@@ -3,8 +3,8 @@
 struct FieldData {
     int rows;
     int columns;
-    int rowWidth;
-    int rowHeight;
+    float width;
+    float height;
 };
 
 struct ShipData {
@@ -21,4 +21,3 @@ struct Position {
   Position(){}
   Position(int row, int col) : row{row}, column{col} {}
 };
-

@@ -12,11 +12,11 @@ using namespace std;
 
 /*
 1;
-12, 12, 25, 25;
-4, 5, 5, 0;
-3, 1, 2, 1;
-2, 7, 1, 0;
-1, 12, 12, 0
+12, 12, 25, 25;   // rows, columns, rowWidth, rowHight - gameField
+4, 5, 5, 0;       // four decks(four horizontal cells from beginCell), beginRowCell, beginColumnCell, isHorizontal - ship1
+3, 1, 2, 1;       // three decks - ship2
+2, 7, 1, 0;       // ship3
+1, 12, 12, 0      // ship4
 */
 
 int main()

@@ -32,10 +32,12 @@ std::tuple<int, FieldData, std::vector<ShipData>> Parser::parse(const std::strin
             qparsedFieldData.pop();
         }
         if(parsedFieldData.size() >= 4) {
-            fieldData = {parsedFieldData.at(static_cast<int>(FieldAttr::rows)), 
-            parsedFieldData.at(static_cast<int>(FieldAttr::columns)), 
+            /*fieldData = {parsedFieldData.at(static_cast<int>(FieldAttr::rows)), 
+            parsedFieldData.at(static_cast<int>(FieldAttr::columns)),
             parsedFieldData.at(static_cast<int>(FieldAttr::width)),
-            parsedFieldData.at(static_cast<int>(FieldAttr::height))};
+            parsedFieldData.at(static_cast<int>(FieldAttr::height))};*/
+            fieldData.columns = parsedFieldData.at(static_cast<int>(FieldAttr::rows));
+            fieldData.rows = parsedFieldData.at(static_cast<int>(FieldAttr::columns));
         }
     }
 

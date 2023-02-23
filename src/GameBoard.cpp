@@ -1,16 +1,15 @@
 #include "GameBoard.h"
 
 GameBoard::GameBoard()
-    : m_rows{0}, m_columns{0},
-      m_width{0}, m_height{0}
+    : m_fieldData{}, m_owner{GameBoard::Owner::player1},
+      m_inputMode{GameBoard::InputMode::manual}
 {
 
 }
 
 GameBoard::GameBoard(const FieldData& fieldData,
                      const std::vector<ShipData>& shipData, Owner owner)
-    : m_rows{fieldData.rows}, m_columns{fieldData.columns}, 
-      m_width{fieldData.rowWidth}, m_height{fieldData.rowHeight},
+    : m_fieldData{fieldData.rows, fieldData.columns},
       m_shipsData{shipData}, m_owner{owner}
 {
     setupCells();
@@ -51,11 +50,11 @@ void GameBoard::attack(int x, int y) {
 }
 
 void GameBoard::setupCells() {
-    int numElem = m_rows * m_columns;
+    int numElem = m_fieldData.rows * m_fieldData.columns;
     m_board.reserve(numElem);
 
-    for(int i = 0; i < m_rows; i++) {
-        for (int j = 0; j  < m_columns; j++) {
+    for(int i = 0; i < m_fieldData.rows; i++) {
+        for (int j = 0; j  < m_fieldData.columns; j++) {
            std::shared_ptr<Cell> cell = std::make_shared<Cell>(i, j);
            m_board.emplace_back(cell);
         }
@@ -69,17 +68,17 @@ void GameBoard::setupShips() {
 }
 
 const std::shared_ptr<Cell>& GameBoard::getBoardSpace(int row, int col) {
-    int index = (m_board.size()/m_columns) * row + col; 
+    int index = (m_board.size()/m_fieldData.columns) * row + col; 
     return m_board.at(index);
 }
 
  bool GameBoard::getShipPosition(const Position& pos, 
     int numberDecks, bool horizontal, std::vector<std::shared_ptr<Cell>>& shipPosition) {
     for(int i = 0; i < numberDecks; i++) {
-        if(pos.column >= m_columns || pos.column < 0 || pos.column + i >= m_columns) {
+        if(pos.column >= m_fieldData.columns || pos.column < 0 || pos.column + i >= m_fieldData.columns) {
             return false;
         };
-        if(pos.row < 0 || pos.row >= m_rows || pos.row + i >= m_rows) {
+        if(pos.row < 0 || pos.row >= m_fieldData.rows || pos.row + i >= m_fieldData.rows) {
             return false;
         }
         std::shared_ptr<Cell> cell = std::make_shared<Cell>();
