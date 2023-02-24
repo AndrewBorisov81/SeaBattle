@@ -9,7 +9,8 @@ Ship::Ship()
 
 }
 
-Ship::Ship(Type type, std::vector<std::shared_ptr<Cell>> position, bool isHorizontal) {
+Ship::Ship(Type type, std::vector<std::shared_ptr<Cell>> position, bool isHorizontal) 
+    : m_type{type}, m_isHorizontal{isHorizontal}, m_position{position} {
 
 }
 
@@ -17,7 +18,7 @@ Ship::~Ship() {
 
 }
 
-std::unique_ptr<Ship> Ship::create(Type type, 
+std::shared_ptr<Ship> Ship::create(Type type, 
         std::vector<std::shared_ptr<Cell>> position, bool isHorizontal) {
     return std::make_unique<Ship>(type, position, isHorizontal);
 }
