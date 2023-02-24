@@ -20,7 +20,6 @@ public:
 
     static std::unique_ptr<GameBoard> create(const FieldData& fieldData,
                                              const std::vector<ShipData>& shipsData, Owner owner);
-    //void init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner);
     // Function for removing the playing and feeling memory
     void deleteBoard();
 

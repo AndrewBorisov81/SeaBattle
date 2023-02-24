@@ -25,14 +25,6 @@ std::unique_ptr<GameBoard> GameBoard::create(const FieldData& fieldData,
     return std::make_unique<GameBoard>(fieldData, shipsData, owner);
 }
 
-/*void GameBoard::init(const FieldData& fieldData, const std::vector<ShipData>& shipsData, Owner owner) {
-     m_columns = fieldData.columns;
-     m_rows = fieldData.rows;
-     m_width = fieldData.rowWidth;
-     m_height = fieldData.rowHeight;
-     m_shipData = shipsData;
-}*/
-
 void GameBoard::deleteBoard() {
 
 }
@@ -64,6 +56,7 @@ void GameBoard::setupCells() {
 void GameBoard::setupShips() {
     for(auto shipData: m_shipsData) {
         std::shared_ptr<Ship> ship = std::make_unique<Ship>();
+        m_ships.emplace_back(ship);
     }
 }
 
