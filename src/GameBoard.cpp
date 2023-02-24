@@ -92,3 +92,19 @@ bool GameBoard::getShipPosition(const Position& pos,
     }
     return true;
 }
+
+void GameBoard::updateBoardData(std::vector<Cell>& cells, const std::vector<std::shared_ptr<Ship>>& ships) {
+    for(const auto &ship: ships) {
+        std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
+        for(const auto &cell: shipPosition) {
+            std::shared_ptr<Cell> boardCell = getBoardSpace(cell->getRow(), cell->getColumn());
+            if(ship->isDestoryed()) {
+                boardCell->setType(Cell::Type::DestroyedShip);
+            } else if (ship->isHit()) {
+                boardCell->setType(Cell::Type::Hit);
+            } else {
+                boardCell->setType(Cell::Type::Ship);
+            }
+        }
+    }
+}

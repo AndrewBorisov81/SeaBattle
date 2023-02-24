@@ -31,6 +31,7 @@ public:
     const std::shared_ptr<Cell>& getBoardSpace(int row, int col);
     bool getShipPosition(const Position& pos, int numberDecks, bool horizontal,
         std::vector<std::shared_ptr<Cell>>& shipPosition);
+    void updateBoardData(std::vector<Cell>& cells, const std::vector<std::shared_ptr<Ship>>& ships);
 
     void attack(int row, int col);
 

@@ -26,13 +26,17 @@ public:
     void setType(Type type);
     Type getType() const;
     bool isDestoryed() const;
+    bool isHit() const;
     bool isHorizontal() const;
+
+    const std::vector<std::shared_ptr<Cell>>& getPosition();
 
 private:
    Type m_type;
    bool m_isDestroyed;
    bool m_isHorizontal;
    int m_health;
+   int m_isHit;
    std::vector<std::shared_ptr<Cell>> m_position;
 
    void destroy();
