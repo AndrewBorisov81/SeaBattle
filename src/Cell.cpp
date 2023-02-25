@@ -42,6 +42,9 @@ bool Cell::isEmpty() const {
 
 void Cell::setType(Type type) {
     m_type = type;
+    if(m_type != Type::Empty) {
+        m_isEmpty = false;
+    }
 }
     
 Cell::Type Cell::getType() const {

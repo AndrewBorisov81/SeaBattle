@@ -14,6 +14,7 @@ GameBoard::GameBoard(const FieldData& fieldData,
 {
     setupCells();
     setupShips();
+    updateBoardData();
 }
 
 GameBoard::~GameBoard() {
@@ -38,7 +39,24 @@ void GameBoard::show() {
 }
 
 void GameBoard::attack(int x, int y) {
+    std::shared_ptr<Cell> attackCell = getBoardSpace(x, y);
+    if(attackCell->getType() == Cell::Type::Ship) {
+        if(std::shared_ptr<Ship> attackShip = getShip(x, y)) {
+            
+        };
+    }
+}
 
+std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {
+    for (auto &ship: m_ships) {
+        std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
+        for (auto &shipCell: shipPosition) {
+            if(shipCell->getRow() == row && shipCell->getColumn() == col) {
+                return ship;
+            }
+        }
+    }
+    return std::shared_ptr<Ship>(nullptr);
 }
 
 void GameBoard::setupCells() {
@@ -80,21 +98,22 @@ bool GameBoard::getShipPosition(const Position& pos,
         }
         int curRow = (horizontal) ? pos.row : pos.row + i;
         int curCol = (horizontal) ? pos.column + i : pos.column;
-        std::shared_ptr<Cell> cell = getBoardSpace(curRow, curCol);
-        if (horizontal) {
-            cell->setRow(curRow);
-            cell->setColumn(curCol);
-        } else {
-            cell->setRow(curRow);
-            cell->setColumn(curCol);
-        }
-        shipPosition.push_back(cell);
+        if(std::shared_ptr<Cell> cell = getBoardSpace(curRow, curCol)) {
+            if (horizontal) {
+                cell->setRow(curRow);
+                cell->setColumn(curCol);
+            } else {
+                cell->setRow(curRow);
+                cell->setColumn(curCol);
+            }
+            shipPosition.push_back(cell);
+        };
     }
     return true;
 }
 
-void GameBoard::updateBoardData(std::vector<Cell>& cells, const std::vector<std::shared_ptr<Ship>>& ships) {
-    for(const auto &ship: ships) {
+void GameBoard::updateBoardData() {
+    for(const auto &ship: m_ships) {
         std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
         for(const auto &cell: shipPosition) {
             std::shared_ptr<Cell> boardCell = getBoardSpace(cell->getRow(), cell->getColumn());
