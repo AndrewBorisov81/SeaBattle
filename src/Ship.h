@@ -21,13 +21,14 @@ public:
     static std::shared_ptr<Ship> create(Type type, 
         std::vector<std::shared_ptr<Cell>> position, bool isHorizontal);
 
-    void hit();
+    void hit(int row, int col);
 
     void setType(Type type);
     Type getType() const;
     bool isDestoryed() const;
     bool isHit() const;
     bool isHorizontal() const;
+    void setHealth();
 
     const std::vector<std::shared_ptr<Cell>>& getPosition();
 

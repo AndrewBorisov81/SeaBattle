@@ -17,6 +17,12 @@ GameBoard::GameBoard(const FieldData& fieldData,
     setupCells();
     setupShips();
     updateBoardData();
+
+    //attack
+    attack(0, 0);
+    attack(1, 0);
+    attack(2, 0);
+    attack(3, 0);
 }
 
 GameBoard::~GameBoard() {
@@ -40,13 +46,15 @@ void GameBoard::show() {
 
 }
 
-void GameBoard::attack(int x, int y) {
-    std::shared_ptr<Cell> attackCell = getBoardSpace(x, y);
+void GameBoard::attack(int row, int col) {
+    std::shared_ptr<Cell> attackCell = getBoardSpace(row, col);
     if(attackCell->getType() == Cell::Type::Ship) {
-        if(std::shared_ptr<Ship> attackShip = getShip(x, y)) {
-            
+        if(std::shared_ptr<Ship> attackShip = getShip(row, col)) {
+            attackShip->hit(row, col);
         };
     }
+
+    updateBoardData();
 }
 
 std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {

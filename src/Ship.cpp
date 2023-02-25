@@ -7,13 +7,13 @@ Ship::Ship()
       m_health{0}, 
       m_isHit{false}
 {
-
+    setHealth();
 }
 
 Ship::Ship(Type type, std::vector<std::shared_ptr<Cell>> position, bool isHorizontal) 
     : m_type{type}, m_isHorizontal{isHorizontal},
       m_health{0}, m_isHit{false}, m_position{position} {
-
+    setHealth();
 }
 
 Ship::~Ship() {
@@ -25,11 +25,21 @@ std::shared_ptr<Ship> Ship::create(Type type,
     return std::make_unique<Ship>(type, position, isHorizontal);
 }
 
-void Ship::hit() {
+void Ship::hit(int row, int col) {
     m_health--;
+
+    for (auto &cell: m_position) {
+        if(cell->getRow() == row && cell->getColumn() == col) {
+            cell->setType(Cell::Type::Hit);
+        }
+    }
     
     if(m_health <= 0) {
-        destroy();
+       for (auto &cell: m_position) {
+           cell->setType(Cell::Type::DestroyedShip);
+       }
+
+       destroy();
     }
 }
 
@@ -59,4 +69,24 @@ bool Ship::isHit() const {
 
 const std::vector<std::shared_ptr<Cell>>& Ship::getPosition() {
     return m_position;
+}
+
+void Ship::setHealth() {
+    switch(m_type) {
+        case Type::fourDeckShip:
+            m_health = 4;
+            break;
+
+        case Type::threeDeckShip:
+            m_health = 3;
+            break;
+
+        case Type::doubleDeckShip:
+            m_health = 2;
+            break;
+
+        case Type::singleDeckShip:
+            m_health = 1;
+            break;
+    }
 }
