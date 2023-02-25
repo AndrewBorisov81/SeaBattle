@@ -1,5 +1,7 @@
 #include "GameBoard.h"
 
+#include <cassert>
+
 GameBoard::GameBoard()
     : m_fieldData{}, m_owner{GameBoard::Owner::player1},
       m_inputMode{GameBoard::InputMode::manual}
@@ -48,6 +50,9 @@ void GameBoard::attack(int x, int y) {
 }
 
 std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {
+    if (col >= m_fieldData.columns || col < 0 || row < 0 || row >= m_fieldData.rows) {
+            assert(false && "Out of range");
+    }
     for (auto &ship: m_ships) {
         std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
         for (auto &shipCell: shipPosition) {
@@ -91,9 +96,11 @@ bool GameBoard::getShipPosition(const Position& pos,
     int numberDecks, bool horizontal, std::vector<std::shared_ptr<Cell>>& shipPosition) {
     for(int i = 0; i < numberDecks; i++) {
         if(pos.column >= m_fieldData.columns || pos.column < 0 || pos.column + i >= m_fieldData.columns) {
+            assert(false && "Out of range");
             return false;
         };
         if(pos.row < 0 || pos.row >= m_fieldData.rows || pos.row + i >= m_fieldData.rows) {
+            assert(false && "Out of range");
             return false;
         }
         int curRow = (horizontal) ? pos.row : pos.row + i;

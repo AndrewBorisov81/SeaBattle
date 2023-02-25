@@ -23,7 +23,7 @@ int main()
 {
    cout << "Hello Sea Battle!" << '\n';
 
-   std::string gameLevel {"1; 12, 12, 25, 25; 4, 5, 5, 0; 3, 1, 2, 1;  2, 7, 1, 0; 1, 12, 12, 0"};
+   std::string gameLevel {"1; 12, 12, 25, 25; 4, 0, 0, 0; 3, 1, 2, 1;  2, 7, 1, 0; 1, 11, 11, 0"};
 
    Parser parser;
    std::tuple<int, FieldData, std::vector<ShipData>> levelParsedData = parser.parse(gameLevel);
@@ -35,3 +35,5 @@ int main()
    /*gameBoard->init(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
                   std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);*/
 }
+
+
