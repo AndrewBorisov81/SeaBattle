@@ -142,3 +142,12 @@ void GameBoard::updateBoardData() {
         }
     }
 }
+
+bool GameBoard::checkShipsDestroyed() {
+    for (auto &ship: m_ships) {
+        if(ship->isDestoryed()) {
+            return true;
+        }
+    }
+    return false;
+}
