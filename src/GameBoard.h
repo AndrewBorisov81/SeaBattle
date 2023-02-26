@@ -41,6 +41,8 @@ public:
     int getColumns() const { return m_fieldData.columns; }
     int getRows() const { return m_fieldData.rows; }
 
+    bool checkShipsDestroyed();
+
 private:
     FieldData m_fieldData;
 
