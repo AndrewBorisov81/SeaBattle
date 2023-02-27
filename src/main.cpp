@@ -5,6 +5,9 @@
 
 #include "Parser.h"
 #include "GameBoard.h"
+#include "Model.h"
+#include "View.h"
+#include "Controller.h"
 
 using namespace std;
 
@@ -34,6 +37,9 @@ int main()
                            std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);
    /*gameBoard->init(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
                   std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);*/
-}
 
+    std::unique_ptr<Model> model = std::make_unique<Model>();
+    std::unique_ptr<View> view = std::make_unique<View>();
+    //std::unique_ptr<Controller> controller = std::make_unique<Controller>(model, view);
+}
 
