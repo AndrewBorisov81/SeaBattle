@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <utility>
+#include <tuple>
 
 #include "Parser.h"
 #include "GameBoard.h"
@@ -40,6 +42,6 @@ int main()
 
     std::unique_ptr<Model> model = std::make_unique<Model>();
     std::unique_ptr<View> view = std::make_unique<View>();
-    //std::unique_ptr<Controller> controller = std::make_unique<Controller>(model, view);
+    std::unique_ptr<Controller> controller = std::make_unique<Controller>(std::move(model), std::move(view));
+    controller->init(std::get<1>(levelParsedData),  std::get<2>(levelParsedData));
 }
-
