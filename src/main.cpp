@@ -11,6 +11,9 @@
 #include "View.h"
 #include "Controller.h"
 
+// Test
+#include "InputConsoleController.h"
+
 using namespace std;
 
 // how to get and hold data to ship
@@ -42,5 +45,7 @@ int main()
     model->init(std::get<static_cast<int>(InitData::field)>(levelParsedData),  
     std::get<static_cast<int>(InitData::ships)>(levelParsedData));
     std::unique_ptr<View> view = std::make_unique<View>();
-    std::unique_ptr<Controller> controller = std::make_unique<Controller>(std::move(model), std::move(view));
+    std::unique_ptr<Controller> controller = 
+        std::make_unique<Controller>(std::move(model), std::move(view));
 }
+
