@@ -30,7 +30,8 @@ public:
     bool isHorizontal() const;
     void setHealth();
 
-    const std::vector<std::shared_ptr<Cell>>& getPosition();
+    const std::vector<std::shared_ptr<Cell>>& getPosition() const;
+    static Ship::Type getTypeInCell(const std::shared_ptr<Cell> cell);
 
 private:
    Type m_type;

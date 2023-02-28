@@ -67,8 +67,12 @@ bool Ship::isHit() const {
     return m_isHit;
 }
 
-const std::vector<std::shared_ptr<Cell>>& Ship::getPosition() {
+const std::vector<std::shared_ptr<Cell>>& Ship::getPosition() const {
     return m_position;
+}
+
+static Ship::Type getTypeInCell(const std::shared_ptr<Cell> cell) {
+    
 }
 
 void Ship::setHealth() {
