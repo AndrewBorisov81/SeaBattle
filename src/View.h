@@ -8,12 +8,14 @@ class View : public IView {
 public:
     View() = default;
     View(const std::vector<std::shared_ptr<Cell>>& board, 
-        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int col);
+        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
+    virtual ~View() = default;
+    bool init(const std::vector<std::shared_ptr<Cell>>& board, 
+        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
     void updateView(const std::vector<std::shared_ptr<Cell>>& board,
          const std::vector<std::shared_ptr<Ship>>& ships);
     void show();
     void clear();
-    virtual ~View() = default;
 private:
    std::vector<std::shared_ptr<Cell>> m_board;
    std::vector<std::shared_ptr<Ship>> m_ships;

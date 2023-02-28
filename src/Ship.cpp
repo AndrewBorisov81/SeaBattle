@@ -71,8 +71,14 @@ const std::vector<std::shared_ptr<Cell>>& Ship::getPosition() const {
     return m_position;
 }
 
-static Ship::Type getTypeInCell(const std::shared_ptr<Cell> cell) {
-    
+Cell::Type Ship::getTypeInCell(const std::shared_ptr<Cell> cell) {
+    Cell::Type cellType{Cell::Type::Ship};
+    for (const auto &shipCell: m_position) {
+        if(shipCell->getRow() == cell->getRow() && shipCell->getColumn() == cell->getColumn()) {
+            return shipCell->getType();
+        }
+    }
+    return cellType;
 }
 
 void Ship::setHealth() {

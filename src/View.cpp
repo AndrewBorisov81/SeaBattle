@@ -11,6 +11,15 @@ View::View(const std::vector<std::shared_ptr<Cell>>& board,
 
 }
 
+bool View::init(const std::vector<std::shared_ptr<Cell>>& board, 
+    const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns)
+{
+    m_board = board;
+    m_ships = ships;
+    m_rows = rows;
+    m_columns = columns;
+}
+
 void View::updateView(const std::vector<std::shared_ptr<Cell>>& board, 
     const std::vector<std::shared_ptr<Ship>>& ships) {
     m_board = board;
@@ -41,7 +50,7 @@ const char* View::getChar(std::shared_ptr<Cell> cell) {
             ch = "0";
             break;
         case Cell::Type::Ship:
-            ch = "X";
+            ch = getShipChar(cell);
             break;
         case Cell::Type::Hit:
             ch = "X";   
@@ -81,4 +90,3 @@ const char* View::getShipChar(std::shared_ptr<Cell> cell) {
     }
     return ch;
 }
-

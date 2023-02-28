@@ -5,8 +5,13 @@
 class Model {
 public:
     Model() = default;
-    Model(std::unique_ptr<GameBoard> gameBoard);
     virtual ~Model() = default;
+
+    bool init(const FieldData& fieldData, const std::vector<ShipData>& shipsData);
+
+    std::shared_ptr<GameBoard> getBoard1() const;
+    std::shared_ptr<GameBoard> getBoard2() const;
 private:
-    std::unique_ptr<GameBoard> m_gameBoard;
+    std::shared_ptr<GameBoard> m_board1;
+    std::shared_ptr<GameBoard> m_board2;
 };

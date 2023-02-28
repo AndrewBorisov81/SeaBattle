@@ -43,7 +43,7 @@ void GameBoard::clear() {
 }
 
 void GameBoard::show() {
-
+ 
 }
 
 void GameBoard::attack(int row, int col) {
@@ -150,4 +150,16 @@ bool GameBoard::checkShipsDestroyed() {
         }
     }
     return false;
+}
+
+const std::vector<std::shared_ptr<Cell>>& GameBoard::getBoard() const {
+    return m_board;
+}
+
+const std::vector<std::shared_ptr<Ship>>& GameBoard::getShips() const {
+    return m_ships;
+}
+
+const FieldData& GameBoard::getFieldData() const {
+    return m_fieldData;
 }
