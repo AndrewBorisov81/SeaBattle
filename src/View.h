@@ -15,6 +15,8 @@ public:
     void updateView(const std::vector<std::shared_ptr<Cell>>& board,
          const std::vector<std::shared_ptr<Ship>>& ships);
     void show();
+    void show(const std::vector<std::shared_ptr<Cell>>& board, 
+        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
     void clear();
 private:
    std::vector<std::shared_ptr<Cell>> m_board;

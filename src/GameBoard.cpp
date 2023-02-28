@@ -19,10 +19,13 @@ GameBoard::GameBoard(const FieldData& fieldData,
     updateBoardData();
 
     //attack
+    //ship destroyed
     attack(0, 0);
     attack(1, 0);
     attack(2, 0);
     attack(3, 0);
+    //missed
+    attack(0, 5);
 }
 
 GameBoard::~GameBoard() {
@@ -52,6 +55,9 @@ void GameBoard::attack(int row, int col) {
         if(std::shared_ptr<Ship> attackShip = getShip(row, col)) {
             attackShip->hit(row, col);
         };
+    }
+    if(attackCell->getType() == Cell::Type::Empty) {
+        attackCell->setType(Cell::Type::Missed);
     }
 
     updateBoardData();

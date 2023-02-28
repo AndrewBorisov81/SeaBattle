@@ -18,6 +18,7 @@ bool View::init(const std::vector<std::shared_ptr<Cell>>& board,
     m_ships = ships;
     m_rows = rows;
     m_columns = columns;
+    return true;
 }
 
 void View::updateView(const std::vector<std::shared_ptr<Cell>>& board, 
@@ -33,6 +34,20 @@ void View::show() {
         for (int j = 0; j < m_columns; j++) {
             int indexElem = numElements/m_rows * i + j;
             std::shared_ptr<Cell> cell = m_board.at(indexElem);
+            std::cout << getChar(cell) << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void View::show(const std::vector<std::shared_ptr<Cell>>& board, 
+        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns)
+{
+    const int numElements = board.size();
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            int indexElem = numElements/rows * i + j;
+            std::shared_ptr<Cell> cell = board.at(indexElem);
             std::cout << getChar(cell) << " ";
         }
         std::cout << std::endl;

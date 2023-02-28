@@ -13,4 +13,7 @@ public:
 private:
     std::unique_ptr<Model> m_model;
     std::unique_ptr<View> m_view;
+
+    std::shared_ptr<GameBoard> getBoard1() const;
+    std::shared_ptr<GameBoard> getBoard2() const;
 };
