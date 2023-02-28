@@ -58,5 +58,27 @@ const char* View::getChar(std::shared_ptr<Cell> cell) {
 
 const char* View::getShipChar(std::shared_ptr<Cell> cell) {
     const char* ch = "1";
+    for (const auto &ship: m_ships) {
+        std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
+        for (const auto &shipCell: shipPosition) {
+            if(shipCell->getRow() == cell->getRow() && shipCell->getColumn() == cell->getColumn()) {
+                switch(ship->getType()) {
+                    case Ship::Type::fourDeckShip:
+                        ch = "4";
+                        break;
+                    case Ship::Type::threeDeckShip:
+                        ch = "3";
+                        break;
+                    case Ship::Type::doubleDeckShip:
+                        ch = "2";
+                        break;
+                    case Ship::Type::singleDeckShip:
+                        ch = "1";
+                        break;
+                }
+            }
+        }
+    }
     return ch;
 }
+

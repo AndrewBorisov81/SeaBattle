@@ -41,5 +41,6 @@ int main()
     std::unique_ptr<Model> model = std::make_unique<Model>();
     std::unique_ptr<View> view = std::make_unique<View>();
     std::unique_ptr<Controller> controller = std::make_unique<Controller>(std::move(model), std::move(view));
-    controller->init(std::get<1>(levelParsedData),  std::get<2>(levelParsedData));
+    controller->init(std::get<static_cast<int>(InitData::field)>(levelParsedData),  
+        std::get<static_cast<int>(InitData::ships)>(levelParsedData));
 }
