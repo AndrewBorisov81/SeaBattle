@@ -1,5 +1,8 @@
 #include "Controller.h"
 #include "InputConsoleController.h"
+#include "Constants.h"
+
+#include <string>
 
  Controller::Controller(std::unique_ptr<Model> model, 
     std::unique_ptr<View> view)
@@ -14,8 +17,9 @@ Controller::~Controller() {
 }
 
 void Controller::init() {
+
     std::shared_ptr<IInputController> m_inputController = std::make_shared<InputConsoleController>();
-        m_inputController->startInput();
+        m_inputController->startInput(Constants::str_player1);
 
     m_view->init(getBoard1()->getBoard(), getBoard1()->getShips(), 
         getBoard1()->getColumns(), getBoard1()->getRows());

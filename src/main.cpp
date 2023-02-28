@@ -48,4 +48,3 @@ int main()
     std::unique_ptr<Controller> controller = 
         std::make_unique<Controller>(std::move(model), std::move(view));
 }
-

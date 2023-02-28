@@ -1,6 +1,7 @@
 #include "InputConsoleController.h"
 
 #include <iostream>
+#include <string>
 
 InputConsoleController::InputConsoleController()
     : m_row{0}, m_column{0}, m_startInput{false}
@@ -8,14 +9,14 @@ InputConsoleController::InputConsoleController()
   
 }
 
-void InputConsoleController::startInput() {
+void InputConsoleController::startInput(const std::string& player) {
     m_startInput = true;
 
     if(m_startInput) {
-        std::cout << "Choose a row number between 0 and 11\n";
+        std::cout << player << " Choose a row number between 0 and 11\n";
         std::cin >> m_row;
 
-        std::cout << "Choose a column number between 0 and 12\n";
+        std::cout << player << " Choose a column number between 0 and 12\n";
         std::cin >> m_column;
     }
 

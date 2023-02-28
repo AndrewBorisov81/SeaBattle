@@ -7,7 +7,7 @@ public:
     InputConsoleController();
     virtual ~InputConsoleController() = default;
 
-    virtual void startInput() override;
+    virtual void startInput(const std::string& player) override;
     virtual void stopInput() override;
     virtual int getRow() const override;
     virtual int getColumn() const override;
