@@ -38,8 +38,9 @@ int main()
 
    enum class InitData{field = 1, ships};
    std::unique_ptr<GameBoard> gameBoard 
-       = GameBoard::create(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
-                           std::get<static_cast<int>(InitData::ships)>(levelParsedData), GameBoard::Owner::player);
+        = GameBoard::create(std::get<static_cast<int>(InitData::field)>(levelParsedData), 
+            std::get<static_cast<int>(InitData::ships)>(levelParsedData), 
+               GameBoard::Owner::player);
 
     std::unique_ptr<Model> model = std::make_unique<Model>();
     model->init(std::get<static_cast<int>(InitData::field)>(levelParsedData),  
