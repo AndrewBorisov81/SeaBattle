@@ -4,6 +4,11 @@
 #include <string>
 #include <queue>
 
+#include <sstream>
+#include <limits>
+#include <algorithm>
+#include <cctype>
+
 InputConsoleController::InputConsoleController()
     : m_rows{-1}, m_columns{-1}, m_startInput{false}
 {
@@ -17,23 +22,18 @@ InputConsoleController::InputConsoleController(int rows, int columns)
 }
 
 void InputConsoleController::startInput(const std::string& player) {
-    m_startInput = true;
+   m_startInput = true;
+   int row{}, column{};
 
-    if (m_startInput) {
-        std::cout << player << " Choose a row number between 0 and 11\n";
-            int getNumber{-1};
-        char* checkBreakCh{nullptr};
-        while(1) {
-            getNumber = getInputNumber(checkBreakCh);
-            //if(*checkBreakCh == '\n') break;
-            if(getNumber >=0 && getNumber < m_rows) {
-                break;
-            }
-        }
-        //std::cout << player << " Choose a column number between 0 and 11\n";
-        //std::cin >> m_column;
-    }
+   std::cout << "Choose a row. ";
+   row = InputConsoleController::getInputNumber();
+
+   std::cout << "Choose a column. ";
+   column = InputConsoleController::getInputNumber();
    
+   m_inputRow = row;
+   m_inputColumn = column;
+
    m_startInput = false;
 }
 
@@ -49,23 +49,23 @@ int InputConsoleController::getColumn() const {
     return 0;
 }
 
-int InputConsoleController::getInputNumber(char* checkBreakCh) {
-    char ch;
-    char chDigit;
-    std::string strDigit;
-    int retInt{-1};
-    while(1) {
-        ch = std::cin.peek();
-        checkBreakCh = &ch;
-        if(ch == '\n') break;
-        if(ch >= '0' && ch <= '9') {
-            std::cin >> chDigit;
-            strDigit.push_back(chDigit);
-            continue;
+int InputConsoleController::getInputNumber() {
+    int number;
+    std::string input;
+
+    while (true) {
+        std::cout << "Enter a number from 0 to 11: ";
+        std::getline(std::cin, input);
+        input.erase(std::remove_if(input.begin(), input.end(), ::isspace), input.end());
+
+        if (input.empty() || !(std::stringstream(input) >> number) || number < 0 || number > 11) {
+            std::cout << "Invalid input. Please enter an integer between 0 and 11." << std::endl;
+        } else {
+            break;
         }
     }
-    if(strDigit.length() > 0) {
-        retInt = std::stoi(strDigit);
-    }
-    return retInt;
+
+    std::cout << "The number you entered is: " << number << std::endl;
+    
+    return number;
 }

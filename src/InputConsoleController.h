@@ -15,7 +15,9 @@ public:
 private:
   int m_rows;
   int m_columns;
+  int m_inputRow;
+  int m_inputColumn;
   bool m_startInput;
 
-  int getInputNumber(char* checkBreakCh);
+  int getInputNumber();
 };
