@@ -42,11 +42,11 @@ void InputConsoleController::stopInput() {
 }
 
 int InputConsoleController::getRow() const {
-    return 0;
+    return m_inputRow;
 }
 
 int InputConsoleController::getColumn() const {
-    return 0;
+    return m_inputColumn;
 }
 
 int InputConsoleController::getInputNumber() {

@@ -10,6 +10,8 @@
 #include "Model.h"
 #include "View.h"
 #include "Controller.h"
+#include "Subject.h"
+#include "Observer.h"
 
 // Test
 #include "InputConsoleController.h"
@@ -48,4 +50,7 @@ int main()
     std::unique_ptr<View> view = std::make_unique<View>();
     std::unique_ptr<Controller> controller = 
         std::make_unique<Controller>(std::move(model), std::move(view));
+
+    Subject subject;
+    Observer observer(subject);
 }

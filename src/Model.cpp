@@ -13,3 +13,11 @@ std::shared_ptr<GameBoard> Model::getBoard1() const {
 std::shared_ptr<GameBoard> Model::getBoard2() const {
     return m_board2;
 }
+
+void Model::setSubject(std::shared_ptr<Subject> subject) {
+    m_subject = subject;
+}
+
+bool Model::shoot(int row, int column) {
+
+}
