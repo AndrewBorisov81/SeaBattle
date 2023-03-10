@@ -9,14 +9,21 @@ GameBoard::GameBoard()
 
 }
 
+/*GameBoard::GameBoard(int rows, int columns) 
+    : m_fieldData{rows, columns}
+{
+    setupCells();
+}*/
+
 GameBoard::GameBoard(const FieldData& fieldData,
                      const std::vector<ShipData>& shipData, Owner owner)
     : m_fieldData{fieldData.rows, fieldData.columns},
       m_shipsData{shipData}, m_owner{owner}
 {
     setupCells();
-    setupShips();
-    updateBoardData();
+    createShips();
+    updateBoardData(m_boardInit, true);
+    //updateBoardData(m_boardCur);
      
     // Test 
     //attack
@@ -33,6 +40,10 @@ GameBoard::~GameBoard() {
 
 }
 
+/*std::unique_ptr<GameBoard> GameBoard::create(int rows, int columns) {
+    return std::make_unique<GameBoard>(rows, columns);
+}*/
+
 std::unique_ptr<GameBoard> GameBoard::create(const FieldData& fieldData, 
                                              const std::vector<ShipData>& shipsData, Owner owner) {
     return std::make_unique<GameBoard>(fieldData, shipsData, owner);
@@ -43,7 +54,7 @@ void GameBoard::deleteBoard() {
 }
 
 void GameBoard::clear() {
-    m_board.clear();
+    m_boardCur.clear();
 }
 
 void GameBoard::show() {
@@ -51,17 +62,17 @@ void GameBoard::show() {
 }
 
 void GameBoard::attack(int row, int col) {
-    std::shared_ptr<Cell> attackCell = getBoardSpace(row, col);
-    if(attackCell->getType() == Cell::Type::Ship) {
-        if(std::shared_ptr<Ship> attackShip = getShip(row, col)) {
+    std::shared_ptr<Cell> initAttackCell = getBoardSpace(row, col, m_boardInit);
+    std::shared_ptr<Cell> curAttackCell = getBoardSpace(row, col, m_boardCur);
+    if (initAttackCell->getType() == Cell::Type::Ship) {
+        if (std::shared_ptr<Ship> attackShip = getShip(row, col)) {
             attackShip->hit(row, col);
         };
-    }
-    if(attackCell->getType() == Cell::Type::Empty) {
-        attackCell->setType(Cell::Type::Missed);
+    } else if (initAttackCell->getType() == Cell::Type::Empty) {
+        curAttackCell->setType(Cell::Type::Missed);
     }
 
-    updateBoardData();
+    updateBoardData(m_boardCur);
 }
 
 std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {
@@ -81,18 +92,20 @@ std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {
 
 void GameBoard::setupCells() {
     int numElem = m_fieldData.rows * m_fieldData.columns;
-    m_board.reserve(numElem);
+    m_boardCur.reserve(numElem);
 
-    for(int i = 0; i < m_fieldData.rows; i++) {
+    for (int i = 0; i < m_fieldData.rows; i++) {
         for (int j = 0; j  < m_fieldData.columns; j++) {
-           std::shared_ptr<Cell> cell = std::make_shared<Cell>(i, j);
-           m_board.push_back(cell);
+           std::shared_ptr<Cell> cellCur = std::make_shared<Cell>(i, j);
+           m_boardCur.push_back(cellCur);
+           std::shared_ptr<Cell> cellInit = std::make_shared<Cell>(i, j);
+           m_boardInit.push_back(cellInit);
         }
     }
 }
 
-void GameBoard::setupShips() {
-    for(auto shipData: m_shipsData) {
+void GameBoard::createShips() {
+    for (auto shipData: m_shipsData) {
         const Position shipBeginPoint(shipData.initRow, shipData.initRow);
         bool isHorizontal = (shipData.direction == 1) ? true : false;
         std::vector<std::shared_ptr<Cell>> resShipPosition;
@@ -102,25 +115,26 @@ void GameBoard::setupShips() {
     }
 }
 
-const std::shared_ptr<Cell>& GameBoard::getBoardSpace(int row, int col) {
-    int index = (m_board.size()/m_fieldData.columns) * row + col; 
-    return m_board.at(index);
+const std::shared_ptr<Cell>& GameBoard::getBoardSpace(int row, int col, 
+    const std::vector<std::shared_ptr<Cell>>& board) {
+    int index = (board.size()/m_fieldData.columns) * row + col; 
+    return board.at(index);
 }
 
 bool GameBoard::getShipPosition(const Position& pos, 
     int numberDecks, bool horizontal, std::vector<std::shared_ptr<Cell>>& shipPosition) {
-    for(int i = 0; i < numberDecks; i++) {
-        if(pos.column >= m_fieldData.columns || pos.column < 0 || pos.column + i >= m_fieldData.columns) {
+    for (int i = 0; i < numberDecks; i++) {
+        if (pos.column >= m_fieldData.columns || pos.column < 0 || pos.column + i >= m_fieldData.columns) {
             assert(false && "Out of range");
             return false;
         };
-        if(pos.row < 0 || pos.row >= m_fieldData.rows || pos.row + i >= m_fieldData.rows) {
+        if (pos.row < 0 || pos.row >= m_fieldData.rows || pos.row + i >= m_fieldData.rows) {
             assert(false && "Out of range");
             return false;
         }
         int curRow = (horizontal) ? pos.row : pos.row + i;
         int curCol = (horizontal) ? pos.column + i : pos.column;
-        if(std::shared_ptr<Cell> cell = getBoardSpace(curRow, curCol)) {
+        if (std::shared_ptr<Cell> cell = getBoardSpace(curRow, curCol, m_boardInit)) {
             if (horizontal) {
                 cell->setRow(curRow);
                 cell->setColumn(curCol);
@@ -134,17 +148,20 @@ bool GameBoard::getShipPosition(const Position& pos,
     return true;
 }
 
-void GameBoard::updateBoardData() {
-    for(const auto &ship: m_ships) {
+void GameBoard::updateBoardData(std::vector<std::shared_ptr<Cell>>& board, bool init) {
+    for (const auto &ship: m_ships) {
         std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
-        for(const auto &cell: shipPosition) {
-            std::shared_ptr<Cell> boardCell = getBoardSpace(cell->getRow(), cell->getColumn());
-            if(ship->isDestoryed()) {
-                boardCell->setType(Cell::Type::DestroyedShip);
-            } else if (ship->isHit()) {
-                boardCell->setType(Cell::Type::Hit);
-            } else {
-                boardCell->setType(Cell::Type::Ship);
+        for (const auto &cell: shipPosition) {
+            if (auto boardCell = getBoardSpace(cell->getRow(), cell->getColumn(), board)) {
+                if(ship->isDestroyed()) {
+                    boardCell->setType(Cell::Type::DestroyedShip);
+                } else if (ship->isHit() && cell->getType() == Cell::Type::Hit) {
+                    boardCell->setType(Cell::Type::Hit);
+                } else {
+                    if(init) {
+                        boardCell->setType(Cell::Type::Ship);
+                    }
+                }
             }
         }
     }
@@ -152,7 +169,7 @@ void GameBoard::updateBoardData() {
 
 bool GameBoard::checkShipsDestroyed() {
     for (auto &ship: m_ships) {
-        if(ship->isDestoryed()) {
+        if(ship->isDestroyed()) {
             return true;
         }
     }
@@ -160,7 +177,7 @@ bool GameBoard::checkShipsDestroyed() {
 }
 
 const std::vector<std::shared_ptr<Cell>>& GameBoard::getBoard() const {
-    return m_board;
+    return m_boardCur;
 }
 
 const std::vector<std::shared_ptr<Ship>>& GameBoard::getShips() const {

@@ -3,6 +3,8 @@
 bool Model::init(const FieldData& fieldData, const std::vector<ShipData>& shipsData) {
     m_board1 = GameBoard::create(fieldData, shipsData, GameBoard::Owner::player1);
     m_board2 = GameBoard::create(fieldData, shipsData, GameBoard::Owner::player2);
+    /*m_board1 = GameBoard::create(fieldData.rows, fieldData.columns);
+    m_board2 = GameBoard::create(fieldData.rows, fieldData.columns);*/
     return true;
 }
 
@@ -19,5 +21,5 @@ void Model::setSubject(std::shared_ptr<Subject> subject) {
 }
 
 bool Model::shoot(int row, int column) {
-
+    return false;
 }

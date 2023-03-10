@@ -19,6 +19,7 @@ private:
     std::unique_ptr<View> m_view;
     std::unique_ptr<IInputController> m_inputController;
     Controller::Player m_currentPlayer;
+    bool m_gameOver;
 
     std::shared_ptr<GameBoard> getBoard1() const;
     std::shared_ptr<GameBoard> getBoard2() const;

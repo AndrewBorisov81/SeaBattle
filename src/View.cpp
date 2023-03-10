@@ -68,7 +68,7 @@ const char* View::getChar(std::shared_ptr<Cell> cell) {
             ch = getShipChar(cell);
             break;
         case Cell::Type::Hit:
-            ch = "X";   
+            ch = "x";   
             break;
         case Cell::Type::DestroyedShip:
             ch = "X";

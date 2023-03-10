@@ -27,6 +27,7 @@ std::shared_ptr<Ship> Ship::create(Type type,
 
 void Ship::hit(int row, int col) {
     m_health--;
+    m_isHit = true;
 
     for (auto &cell: m_position) {
         if(cell->getRow() == row && cell->getColumn() == col) {
@@ -55,7 +56,7 @@ void Ship::destroy() {
     m_isDestroyed = true;
 }
 
-bool Ship::isDestoryed() const {
+bool Ship::isDestroyed() const {
     return m_isDestroyed;
 }
 

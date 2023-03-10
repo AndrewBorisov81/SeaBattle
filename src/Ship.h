@@ -25,7 +25,7 @@ public:
 
     void setType(Type type);
     Type getType() const;
-    bool isDestoryed() const;
+    bool isDestroyed() const;
     bool isHit() const;
     bool isHorizontal() const;
     void setHealth();
