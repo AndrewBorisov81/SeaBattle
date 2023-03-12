@@ -38,6 +38,7 @@ void View::show() {
         }
         std::cout << std::endl;
     }
+    std::cout << "------------------------" << std::endl;
 }
 
 void View::show(const std::vector<std::shared_ptr<Cell>>& board, 
