@@ -181,6 +181,10 @@ const std::vector<std::shared_ptr<Cell>>& GameBoard::getBoard() const {
     return m_boardCur;
 }
 
+const std::vector<std::shared_ptr<Cell>>& GameBoard::getInitBoard() const {
+    return  m_boardInit;
+}
+
 const std::vector<std::shared_ptr<Ship>>& GameBoard::getShips() const {
     return m_ships;
 }

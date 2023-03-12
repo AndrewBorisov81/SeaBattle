@@ -25,15 +25,15 @@ void View::updateView(const std::vector<std::shared_ptr<Cell>>& board,
     const std::vector<std::shared_ptr<Ship>>& ships) {
     m_board = board;
     m_ships = ships;
-    show();
+    show(m_board);
 }
 
-void View::show() {
-    const int numElements = m_board.size();
+void View::show(const std::vector<std::shared_ptr<Cell>>& board) {
+    const int numElements = board.size();
     for (int i = 0; i < m_rows; i++) {
         for (int j = 0; j < m_columns; j++) {
             int indexElem = numElements/m_rows * i + j;
-            std::shared_ptr<Cell> cell = m_board.at(indexElem);
+            std::shared_ptr<Cell> cell = board.at(indexElem);
             std::cout << getChar(cell) << " ";
         }
         std::cout << std::endl;

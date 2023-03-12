@@ -47,6 +47,7 @@ public:
     bool checkShipsDestroyed();
 
     const std::vector<std::shared_ptr<Cell>>& getBoard() const;
+    const std::vector<std::shared_ptr<Cell>>& getInitBoard() const;
     const std::vector<std::shared_ptr<Ship>>& getShips() const;
     const FieldData& getFieldData() const;
 

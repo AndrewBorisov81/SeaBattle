@@ -28,6 +28,7 @@ void Controller::init() {
     
             m_view->init(getBoard1()->getBoard(), getBoard1()->getShips(), 
                 getBoard1()->getColumns(), getBoard1()->getRows());
+            m_view->show(getBoard1()->getInitBoard());
             m_view->show(getBoard1()->getBoard(), getBoard1()->getShips(), 
                 getBoard1()->getColumns(), getBoard1()->getRows());
     
