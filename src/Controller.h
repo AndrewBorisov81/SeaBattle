@@ -25,4 +25,5 @@ private:
     std::shared_ptr<GameBoard> getBoard2() const;
     void changePlayer();
     bool checkGameOver();
+    void gameOver();
 };

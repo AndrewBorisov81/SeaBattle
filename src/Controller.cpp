@@ -3,6 +3,7 @@
 #include "Constants.h"
 
 #include <string>
+#include <iostream>
 
  Controller::Controller(std::unique_ptr<Model> model, 
     std::unique_ptr<View> view)
@@ -54,4 +55,16 @@ void Controller::changePlayer() {
     } else {
         m_currentPlayer = Controller::Player::player1;
     }
+}
+
+bool Controller::checkGameOver() {
+    if(auto board = m_model->getBoard1()) {
+        if(bool allShipsDestoryed = board->checkShipsDestroyed()) {
+            gameOver();                        
+        }
+    }
+}
+
+void Controller::gameOver() {
+    std::cout << "Game Over!" << '\n';
 }

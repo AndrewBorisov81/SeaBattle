@@ -168,12 +168,13 @@ void GameBoard::updateBoardData(std::vector<std::shared_ptr<Cell>>& board, bool 
 }
 
 bool GameBoard::checkShipsDestroyed() {
+    bool allShipsDestroyed{true};
     for (auto &ship: m_ships) {
-        if(ship->isDestroyed()) {
-            return true;
+        if(!ship->isDestroyed()) {
+            return false;
         }
     }
-    return false;
+    return allShipsDestroyed;
 }
 
 const std::vector<std::shared_ptr<Cell>>& GameBoard::getBoard() const {
