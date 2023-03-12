@@ -1,6 +1,7 @@
 #include "GameBoard.h"
 
 #include <cassert>
+#include <iostream>
 
 GameBoard::GameBoard()
     : m_fieldData{}, m_owner{GameBoard::Owner::player1},
@@ -8,12 +9,6 @@ GameBoard::GameBoard()
 {
 
 }
-
-/*GameBoard::GameBoard(int rows, int columns) 
-    : m_fieldData{rows, columns}
-{
-    setupCells();
-}*/
 
 GameBoard::GameBoard(const FieldData& fieldData,
                      const std::vector<ShipData>& shipData, Owner owner)
@@ -23,7 +18,6 @@ GameBoard::GameBoard(const FieldData& fieldData,
     setupCells();
     createShips();
     updateBoardData(m_boardInit, true);
-    //updateBoardData(m_boardCur);
      
     // Test 
     //attack
@@ -39,10 +33,6 @@ GameBoard::GameBoard(const FieldData& fieldData,
 GameBoard::~GameBoard() {
 
 }
-
-/*std::unique_ptr<GameBoard> GameBoard::create(int rows, int columns) {
-    return std::make_unique<GameBoard>(rows, columns);
-}*/
 
 std::unique_ptr<GameBoard> GameBoard::create(const FieldData& fieldData, 
                                              const std::vector<ShipData>& shipsData, Owner owner) {
@@ -73,6 +63,10 @@ void GameBoard::attack(int row, int col) {
     }
 
     updateBoardData(m_boardCur);
+    bool shipDestroyed = checkShipsDestroyed();
+    if(shipDestroyed) {
+        std::cout << "Game Over!" << '\n';
+    }
 }
 
 std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {
