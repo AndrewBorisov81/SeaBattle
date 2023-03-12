@@ -106,7 +106,7 @@ void GameBoard::setupCells() {
 
 void GameBoard::createShips() {
     for (auto shipData: m_shipsData) {
-        const Position shipBeginPoint(shipData.initRow, shipData.initRow);
+        const Position shipBeginPoint(shipData.initRow, shipData.initColumn);
         bool isHorizontal = (shipData.direction == 1) ? true : false;
         std::vector<std::shared_ptr<Cell>> resShipPosition;
         getShipPosition(shipBeginPoint, shipData.type, isHorizontal, resShipPosition);
