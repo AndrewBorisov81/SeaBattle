@@ -17,11 +17,7 @@ public:
 
     void setSubject(std::shared_ptr<Subject> subject);
 private:
-    // Current boards(after shoots)
     std::shared_ptr<GameBoard> m_board1;
     std::shared_ptr<GameBoard> m_board2;
-    // Init boards
-    /*std::shared_ptr<GameBoard> m_boardInit1;
-    std::shared_ptr<GameBoard> m_boardInit2;*/
     std::shared_ptr<Subject> m_subject;
 };
