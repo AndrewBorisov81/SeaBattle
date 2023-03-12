@@ -5,7 +5,8 @@
 
 GameBoard::GameBoard()
     : m_fieldData{}, m_owner{GameBoard::Owner::player1},
-      m_inputMode{GameBoard::InputMode::manual}
+      m_inputMode{GameBoard::InputMode::manual},
+      m_shipsDestroyed{false}
 {
 
 }
@@ -13,7 +14,9 @@ GameBoard::GameBoard()
 GameBoard::GameBoard(const FieldData& fieldData,
                      const std::vector<ShipData>& shipData, Owner owner)
     : m_fieldData{fieldData.rows, fieldData.columns},
-      m_shipsData{shipData}, m_owner{owner}
+      m_shipsData{shipData}, 
+      m_owner{owner},
+      m_shipsDestroyed{false}
 {
     setupCells();
     createShips();
@@ -22,12 +25,12 @@ GameBoard::GameBoard(const FieldData& fieldData,
     // Test 
     //attack
     //ship destroyed
-    /*attack(0, 0);
+    attack(0, 0);
     attack(1, 0);
     attack(2, 0);
-    attack(3, 0);*/
+    attack(3, 0);
     //missed
-    //attack(0, 5);
+    attack(0, 5);
 }
 
 GameBoard::~GameBoard() {
@@ -63,8 +66,8 @@ void GameBoard::attack(int row, int col) {
     }
 
     updateBoardData(m_boardCur);
-    bool shipDestroyed = checkShipsDestroyed();
-    if(shipDestroyed) {
+    bool m_shipsDestroyed = checkShipsDestroyed();
+    if(m_shipsDestroyed) {
         std::cout << "Game Over!" << '\n';
     }
 }
@@ -186,3 +189,8 @@ const std::vector<std::shared_ptr<Ship>>& GameBoard::getShips() const {
 const FieldData& GameBoard::getFieldData() const {
     return m_fieldData;
 }
+
+ bool GameBoard::isShipsDestroyed() const {
+    return m_shipsDestroyed;
+ }
+ 

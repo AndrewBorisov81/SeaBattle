@@ -44,7 +44,7 @@ public:
     int getColumns() const { return m_fieldData.columns; }
     int getRows() const { return m_fieldData.rows; }
 
-    bool checkShipsDestroyed();
+    bool isShipsDestroyed() const;
 
     const std::vector<std::shared_ptr<Cell>>& getBoard() const;
     const std::vector<std::shared_ptr<Cell>>& getInitBoard() const;
@@ -61,4 +61,7 @@ private:
     std::vector<ShipData> m_shipsData;
     Owner m_owner;
     InputMode m_inputMode;
+    bool m_shipsDestroyed;
+
+    bool checkShipsDestroyed();
 };
