@@ -62,9 +62,11 @@ void Controller::changePlayer() {
 bool Controller::checkGameOver() {
     if(auto board = m_model->getBoard1()) {
         if(bool allShipsDestoryed = board->isShipsDestroyed()) {
-            gameOver();                        
+            gameOver();
+            return true;                        
         }
     }
+    return false;
 }
 
 void Controller::gameOver() {
