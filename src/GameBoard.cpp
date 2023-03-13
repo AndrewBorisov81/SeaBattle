@@ -8,7 +8,7 @@ GameBoard::GameBoard()
       m_inputMode{GameBoard::InputMode::manual},
       m_shipsDestroyed{false}
 {
-
+   
 }
 
 GameBoard::GameBoard(const FieldData& fieldData,
@@ -29,6 +29,13 @@ GameBoard::GameBoard(const FieldData& fieldData,
     attack(1, 0);
     attack(2, 0);
     attack(3, 0);
+
+    attack(1, 2);
+    attack(1, 3);
+    attack(1, 4);
+
+    attack(7, 1);
+    attack(8, 1);
     //missed
     attack(0, 5);
 }
@@ -66,7 +73,13 @@ void GameBoard::attack(int row, int col) {
     }
 
     updateBoardData(m_boardCur);
-    bool m_shipsDestroyed = checkShipsDestroyed();
+    
+    bool shipsDestroyed{false};
+    if(!m_shipsDestroyed) {
+        shipsDestroyed = checkShipsDestroyed();
+        m_shipsDestroyed = shipsDestroyed; 
+    }
+
     if(m_shipsDestroyed) {
         std::cout << "Game Over!" << '\n';
     }
@@ -190,7 +203,6 @@ const FieldData& GameBoard::getFieldData() const {
     return m_fieldData;
 }
 
- bool GameBoard::isShipsDestroyed() const {
+bool GameBoard::isShipsDestroyed() const {
     return m_shipsDestroyed;
- }
- 
+}

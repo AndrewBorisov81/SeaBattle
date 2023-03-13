@@ -20,8 +20,7 @@ Controller::~Controller() {
 }
 
 void Controller::init() {
-    bool gameOver{false};
-    while (true && !gameOver) {
+    while (true && !m_gameOver) {
         if (auto board1 = getBoard1()) {
             std::shared_ptr<IInputController> m_inputController = 
             std::make_shared<InputConsoleController>(getBoard1()->getRows(), getBoard1()->getColumns());
@@ -39,7 +38,7 @@ void Controller::init() {
             getBoard1()->attack(row, column);
             m_view->updateView(getBoard1()->getBoard(), getBoard1()->getShips());
 
-            gameOver = board1->isShipsDestroyed();
+            m_gameOver = board1->isShipsDestroyed();
         }
     }
 }
