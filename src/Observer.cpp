@@ -9,7 +9,7 @@ Observer::Observer(std::shared_ptr<Subject> subject) : m_subject{subject} {
 }
 
 Observer::~Observer() {
-    //m_subject.detach(this);
+    m_subject->detach(this);
 }
 
 void Observer::update() {
