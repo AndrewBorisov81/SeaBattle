@@ -13,9 +13,8 @@ public:
     std::shared_ptr<GameBoard> getBoard1() const;
     std::shared_ptr<GameBoard> getBoard2() const;
 
-    bool shoot(int row, int column);
-
     void setSubject(std::shared_ptr<Subject> subject);
+    void updatedBoardData();
 private:
     std::shared_ptr<GameBoard> m_board1;
     std::shared_ptr<GameBoard> m_board2;

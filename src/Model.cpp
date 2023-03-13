@@ -18,6 +18,6 @@ void Model::setSubject(std::shared_ptr<Subject> subject) {
     m_subject = subject;
 }
 
-bool Model::shoot(int row, int column) {
-    return false;
+void Model::updatedBoardData() {
+    m_subject->notify();    
 }

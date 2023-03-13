@@ -36,6 +36,7 @@ void Controller::init() {
             int column = m_inputController->getColumn();
     
             getBoard1()->attack(row, column);
+            m_model->updatedBoardData();
             m_view->updateView(getBoard1()->getBoard(), getBoard1()->getShips());
 
             m_gameOver = board1->isShipsDestroyed();
