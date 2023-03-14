@@ -4,7 +4,7 @@
     m_subject.attach(this);
 }*/
 
-Observer::Observer(std::shared_ptr<Subject> subject) : m_subject{subject} {
+Observer::Observer(std::shared_ptr<ISubject> subject) : m_subject{subject} {
     m_subject->attach(this);
 }
 

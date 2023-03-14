@@ -38,8 +38,8 @@ int main()
    Parser parser;
    std::tuple<int, FieldData, std::vector<ShipData>> levelParsedData = parser.parse(gameLevel);
 
-    std::shared_ptr<Subject> subject = std::make_unique<Subject>();;
-    std::unique_ptr<Observer> observer = std::make_unique<Observer>(subject);
+    std::shared_ptr<ISubject> subject = std::make_unique<Subject>();;
+    std::unique_ptr<IObserver> observer = std::make_unique<Observer>(subject);
 
    enum class InitData{field = 1, ships};
     std::unique_ptr<Model> model = std::make_unique<Model>();

@@ -14,7 +14,7 @@ std::shared_ptr<GameBoard> Model::getBoard2() const {
     return m_board2;
 }
 
-void Model::setSubject(std::shared_ptr<Subject> subject) {
+void Model::setSubject(std::shared_ptr<ISubject> subject) {
     m_subject = subject;
 }
 
