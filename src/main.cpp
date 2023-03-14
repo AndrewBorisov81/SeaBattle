@@ -38,8 +38,7 @@ int main()
    Parser parser;
    std::tuple<int, FieldData, std::vector<ShipData>> levelParsedData = parser.parse(gameLevel);
 
-    std::shared_ptr<Subject> subject = std::make_unique<Subject>();
-    //Observer observer(subject);
+    std::shared_ptr<Subject> subject = std::make_unique<Subject>();;
     std::unique_ptr<Observer> observer = std::make_unique<Observer>(subject);
 
    enum class InitData{field = 1, ships};
@@ -48,7 +47,6 @@ int main()
     std::get<static_cast<int>(InitData::ships)>(levelParsedData));
     model->setSubject(subject);
     std::unique_ptr<View> view = std::make_unique<View>();
-    //view->setObserver(std::move(observer));
     std::unique_ptr<Controller> controller = 
         std::make_unique<Controller>(std::move(model), std::move(view));
 }

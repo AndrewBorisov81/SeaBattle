@@ -2,7 +2,6 @@
 #include "IView.h"
 #include "Cell.h"
 #include "Ship.h"
-#include "Observer.h"
 
 #include <vector>
 #include <memory>
@@ -21,13 +20,11 @@ public:
         const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
     void clear();
 
-    //void setObserver(std::shared_ptr<Observer> observer);
 private:
    std::vector<std::shared_ptr<Cell>> m_board;
    std::vector<std::shared_ptr<Ship>> m_ships;
    int m_rows;
    int m_columns;
-   //std::shared_ptr<Observer> m_observer;
 
    const char* getChar(std::shared_ptr<Cell> cell);
    const char* getShipChar(std::shared_ptr<Cell> cell);

@@ -107,6 +107,3 @@ const char* View::getShipChar(std::shared_ptr<Cell> cell) {
     return ch;
 }
 
-/*void View::setObserver(std::shared_ptr<Observer> observer) {
-    m_observer = observer;
-}*/
