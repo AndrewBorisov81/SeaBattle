@@ -9,6 +9,9 @@
 
 class GameBoard {
 public:
+    using CellsList = std::vector<std::shared_ptr<Cell>>;
+    using ShipsList = std::vector<std::shared_ptr<Ship>>;
+
     enum class Owner{ player, computer, player1, player2 };
     // Input ship position
     enum class InputMode{ manual, autoRandom };
@@ -31,10 +34,10 @@ public:
     void setupCells();
     void createShips();
     const std::shared_ptr<Cell>& getBoardSpace(int row, int col,
-        const std::vector<std::shared_ptr<Cell>>& board);
+        const CellsList& board);
     bool getShipPosition(const Position& pos, int numberDecks, bool horizontal,
-        std::vector<std::shared_ptr<Cell>>& shipPosition);
-    void updateBoardData(std::vector<std::shared_ptr<Cell>>& board, bool init = false);
+        CellsList& shipPosition);
+    void updateBoardData(CellsList& board, bool init = false);
     std::shared_ptr<Ship> getShip(int row, int col);
 
     void attack(int row, int col);
@@ -46,18 +49,18 @@ public:
 
     bool isShipsDestroyed() const;
 
-    const std::vector<std::shared_ptr<Cell>>& getBoard() const;
-    const std::vector<std::shared_ptr<Cell>>& getInitBoard() const;
-    const std::vector<std::shared_ptr<Ship>>& getShips() const;
+    const CellsList& getBoard() const;
+    const CellsList& getInitBoard() const;
+    const ShipsList& getShips() const;
     const FieldData& getFieldData() const;
 
 private:
     FieldData m_fieldData;
     // After init set data
-    std::vector<std::shared_ptr<Cell>> m_boardInit;
+    CellsList m_boardInit;
     // Updated after shoot
-    std::vector<std::shared_ptr<Cell>> m_boardCur;
-    std::vector<std::shared_ptr<Ship>> m_ships;
+    CellsList m_boardCur;
+    ShipsList m_ships;
     std::vector<ShipData> m_shipsData;
     Owner m_owner;
     InputMode m_inputMode;
@@ -65,4 +68,3 @@ private:
 
     bool checkShipsDestroyed();
 };
-

@@ -90,7 +90,7 @@ std::shared_ptr<Ship> GameBoard::getShip(int row, int col) {
             assert(false && "Out of range");
     }
     for (auto &ship: m_ships) {
-        std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
+        CellsList shipPosition = ship->getPosition();
         for (auto &shipCell: shipPosition) {
             if(shipCell->getRow() == row && shipCell->getColumn() == col) {
                 return ship;
@@ -118,7 +118,7 @@ void GameBoard::createShips() {
     for (auto shipData: m_shipsData) {
         const Position shipBeginPoint(shipData.initRow, shipData.initColumn);
         bool isHorizontal = (shipData.direction == 1) ? true : false;
-        std::vector<std::shared_ptr<Cell>> resShipPosition;
+        CellsList resShipPosition;
         getShipPosition(shipBeginPoint, shipData.type, isHorizontal, resShipPosition);
         Ship::Type shipType = static_cast<Ship::Type>(shipData.type);
         m_ships.push_back(Ship::create(shipType, resShipPosition, isHorizontal));
@@ -126,13 +126,13 @@ void GameBoard::createShips() {
 }
 
 const std::shared_ptr<Cell>& GameBoard::getBoardSpace(int row, int col, 
-    const std::vector<std::shared_ptr<Cell>>& board) {
+    const CellsList& board) {
     int index = (board.size()/m_fieldData.columns) * row + col; 
     return board.at(index);
 }
 
 bool GameBoard::getShipPosition(const Position& pos, 
-    int numberDecks, bool horizontal, std::vector<std::shared_ptr<Cell>>& shipPosition) {
+    int numberDecks, bool horizontal, CellsList& shipPosition) {
     for (int i = 0; i < numberDecks; i++) {
         if (pos.column >= m_fieldData.columns || pos.column < 0 || pos.column + i >= m_fieldData.columns) {
             assert(false && "Out of range");
@@ -158,9 +158,9 @@ bool GameBoard::getShipPosition(const Position& pos,
     return true;
 }
 
-void GameBoard::updateBoardData(std::vector<std::shared_ptr<Cell>>& board, bool init) {
+void GameBoard::updateBoardData(CellsList& board, bool init) {
     for (const auto &ship: m_ships) {
-        std::vector<std::shared_ptr<Cell>> shipPosition = ship->getPosition();
+        CellsList shipPosition = ship->getPosition();
         for (const auto &cell: shipPosition) {
             if (auto boardCell = getBoardSpace(cell->getRow(), cell->getColumn(), board)) {
                 if(ship->isDestroyed()) {
@@ -187,15 +187,15 @@ bool GameBoard::checkShipsDestroyed() {
     return allShipsDestroyed;
 }
 
-const std::vector<std::shared_ptr<Cell>>& GameBoard::getBoard() const {
+const GameBoard::CellsList& GameBoard::getBoard() const {
     return m_boardCur;
 }
 
-const std::vector<std::shared_ptr<Cell>>& GameBoard::getInitBoard() const {
+const GameBoard::CellsList& GameBoard::getInitBoard() const {
     return  m_boardInit;
 }
 
-const std::vector<std::shared_ptr<Ship>>& GameBoard::getShips() const {
+const GameBoard::ShipsList& GameBoard::getShips() const {
     return m_ships;
 }
 
