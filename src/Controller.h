@@ -17,9 +17,11 @@ public:
     void init();
     void updateData();
 
+protected:
+    std::unique_ptr<View> m_view;
+
 private:
     std::unique_ptr<Model> m_model;
-    std::unique_ptr<View> m_view;
     std::unique_ptr<IInputController> m_inputController;
     Controller::Player m_currentPlayer;
     bool m_gameOver;

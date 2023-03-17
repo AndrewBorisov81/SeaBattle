@@ -7,8 +7,8 @@
 
  Controller::Controller(std::unique_ptr<Model> model, 
     std::unique_ptr<View> view)
-    : m_model{std::move(model)}, 
-      m_view{std::move(view)},
+    : m_view{std::move(view)},
+      m_model{std::move(model)}, 
       m_currentPlayer{Controller::Player::player1},
       m_gameOver{false}
 {
@@ -27,9 +27,9 @@ void Controller::init() {
     
             m_view->init(board1->getBoard(), board1->getShips(), 
                 board1->getColumns(), board1->getRows());
-            m_view->show(board1->getInitBoard());
-            m_view->show(board1->getBoard(), board1->getShips(), 
-                board1->getColumns(), board1->getRows());
+            //m_view->show(board1->getInitBoard());
+            /*m_view->show(board1->getBoard(), board1->getShips(), 
+                board1->getColumns(), board1->getRows());*/
     
             m_inputController->startInput(Constants::str_player1);
             int row = m_inputController->getRow();
@@ -38,7 +38,7 @@ void Controller::init() {
             board1->attack(row, column);
             m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
                 board1->getColumns(), board1->getRows());
-            m_view->updateView(board1->getBoard(), board1->getShips());
+            //m_view->updateView(board1->getBoard(), board1->getShips());
 
             m_gameOver = board1->isShipsDestroyed();
         }

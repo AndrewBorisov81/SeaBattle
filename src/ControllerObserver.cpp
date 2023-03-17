@@ -11,5 +11,7 @@ ControllerObserver::ControllerObserver(std::shared_ptr<ISubject> subject,
 void ControllerObserver::update(const GameBoard::CellsList& board,
     const GameBoard::ShipsList& ships, int rows, int columns)
 {
-    bool stop = true;    
+    if(m_view) {
+        m_view->updateView(board, ships);
+    }
 }

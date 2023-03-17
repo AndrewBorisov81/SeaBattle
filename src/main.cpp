@@ -13,6 +13,7 @@
 #include "Subject.h"
 //#include "Observer.h"
 #include "ControllerObserver.h"
+#include "ModelSubject.h"
 
 // Test
 #include "InputConsoleController.h"
@@ -39,9 +40,10 @@ int main()
    Parser parser;
    std::tuple<int, FieldData, std::vector<ShipData>> levelParsedData = parser.parse(gameLevel);
 
-    std::shared_ptr<ISubject> subject = std::make_unique<Subject>();;
+    //std::shared_ptr<ISubject> subject = std::make_unique<Subject>();;
     //std::unique_ptr<IObserver> observer = std::make_unique<Observer>(subject);
     //std::unique_ptr<IObserver> observer = std::make_unique<ControllerObserver>(subject);
+    std::shared_ptr<ISubject> subject = std::make_unique<ModelSubject>();;
 
    enum class InitData{field = 1, ships};
     std::unique_ptr<Model> model = std::make_unique<Model>();
