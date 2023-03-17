@@ -1,8 +1,10 @@
 #pragma once
-#include <memory>
+#include "Observer.h"
 #include "Model.h"
 #include "View.h"
 #include "IInputController.h"
+
+#include <memory>
 
 class Controller {
     enum class Player{ player1, player2 };
@@ -13,6 +15,7 @@ public:
     virtual ~Controller();
     // when application start
     void init();
+    void updateData();
 
 private:
     std::unique_ptr<Model> m_model;

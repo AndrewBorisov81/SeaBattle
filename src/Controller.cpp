@@ -23,21 +23,22 @@ void Controller::init() {
     while (true && !m_gameOver) {
         if (auto board1 = getBoard1()) {
             std::shared_ptr<IInputController> m_inputController = 
-            std::make_shared<InputConsoleController>(getBoard1()->getRows(), getBoard1()->getColumns());
+            std::make_shared<InputConsoleController>(board1->getRows(), board1->getColumns());
     
-            m_view->init(getBoard1()->getBoard(), getBoard1()->getShips(), 
-                getBoard1()->getColumns(), getBoard1()->getRows());
-            m_view->show(getBoard1()->getInitBoard());
-            m_view->show(getBoard1()->getBoard(), getBoard1()->getShips(), 
-                getBoard1()->getColumns(), getBoard1()->getRows());
+            m_view->init(board1->getBoard(), board1->getShips(), 
+                board1->getColumns(), board1->getRows());
+            m_view->show(board1->getInitBoard());
+            m_view->show(board1->getBoard(), board1->getShips(), 
+                board1->getColumns(), board1->getRows());
     
             m_inputController->startInput(Constants::str_player1);
             int row = m_inputController->getRow();
             int column = m_inputController->getColumn();
     
-            getBoard1()->attack(row, column);
-            m_model->updatedBoardData();
-            m_view->updateView(getBoard1()->getBoard(), getBoard1()->getShips());
+            board1->attack(row, column);
+            m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
+                board1->getColumns(), board1->getRows());
+            m_view->updateView(board1->getBoard(), board1->getShips());
 
             m_gameOver = board1->isShipsDestroyed();
         }

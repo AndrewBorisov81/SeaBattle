@@ -17,8 +17,9 @@ void Subject::detach(IObserver* observer) {
    m_observers.remove(observer);
 }
 
-void Subject::notify() {
+void Subject::notify(const std::vector<std::shared_ptr<Cell>>& board,
+    const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns) {
     for (auto& o: m_observers) {
-        o->update();
+        o->update(board, ships, rows, columns);
     }
 }

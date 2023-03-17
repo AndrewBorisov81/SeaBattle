@@ -14,7 +14,8 @@ public:
     std::shared_ptr<GameBoard> getBoard2() const;
 
     void setSubject(std::shared_ptr<ISubject> subject);
-    void updatedBoardData();
+    void updatedBoardData(const std::vector<std::shared_ptr<Cell>>& board,
+        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
 private:
     std::shared_ptr<GameBoard> m_board1;
     std::shared_ptr<GameBoard> m_board2;
