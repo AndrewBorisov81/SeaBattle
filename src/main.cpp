@@ -14,6 +14,7 @@
 #include "Subject.h"
 #include "ControllerObserver.h"
 #include "LoggerObserver.h"
+#include "ViewObserver.h"
 #include "ModelSubject.h"
 
 // Test
@@ -47,13 +48,15 @@ int main()
     model->init(std::get<static_cast<int>(InitData::field)>(levelParsedData),  
     std::get<static_cast<int>(InitData::ships)>(levelParsedData));
     model->setSubject(subject);
-    std::unique_ptr<IView> view = std::make_unique<View>();
+    std::shared_ptr<IView> view = std::make_shared<View>();
 
     std::unique_ptr<IObserver> controllerObserver = 
         std::make_unique<ControllerObserver>(subject);
     std::unique_ptr<IObserver> loggerObserver = 
         std::make_unique<LoggerObserver>(subject);
+    std::unique_ptr<IObserver> viewObserver =
+        std::make_unique<ViewObserver>(subject);
 
     std::unique_ptr<Controller> controller = 
-        std::make_unique<Controller>(std::move(model), std::move(view));
+        std::make_unique<Controller>(std::move(model), view);
 }

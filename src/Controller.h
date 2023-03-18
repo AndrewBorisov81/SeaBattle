@@ -11,14 +11,14 @@ class Controller {
 public:
     Controller() = default;
     Controller(std::shared_ptr<Model> model, 
-    std::unique_ptr<IView> view);
+    std::shared_ptr<IView> view);
     virtual ~Controller();
     // when application start
     void init();
     void updateData();
 
 protected:
-    std::unique_ptr<IView> m_view;
+    std::shared_ptr<IView> m_view;
 
 private:
     std::shared_ptr<Model> m_model;

@@ -6,8 +6,8 @@
 #include <iostream>
 
  Controller::Controller(std::shared_ptr<Model> model, 
-    std::unique_ptr<IView> view)
-    : m_view{std::move(view)},
+    std::shared_ptr<IView> view)
+    : m_view{view},
       m_model{model}, 
       m_currentPlayer{Controller::Player::player1},
       m_gameOver{false}
