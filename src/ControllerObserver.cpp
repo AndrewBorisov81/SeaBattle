@@ -16,8 +16,5 @@ ControllerObserver::~ControllerObserver() {
 void ControllerObserver::update(const std::vector<std::shared_ptr<Cell>>& board,
     const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns)
 {
-    /*if(m_view) {
-        m_view->updateView(board, ships);
-    }*/
     std::cout << "ControllerObserver Update!" << '\n';
 }

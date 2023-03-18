@@ -14,6 +14,7 @@
 #include "Subject.h"
 #include "ControllerObserver.h"
 #include "LoggerObserver.h"
+#include "ShipsLogger.h"
 #include "ViewObserver.h"
 #include "ModelSubject.h"
 
@@ -53,7 +54,7 @@ int main()
     std::unique_ptr<IObserver> controllerObserver = 
         std::make_unique<ControllerObserver>(subject);
     std::unique_ptr<IObserver> loggerObserver = 
-        std::make_unique<LoggerObserver>(subject);
+        std::make_unique<LoggerObserver>(subject, std::make_unique<ShipsLogger>());
     std::unique_ptr<IObserver> viewObserver =
         std::make_unique<ViewObserver>(subject, view);
 

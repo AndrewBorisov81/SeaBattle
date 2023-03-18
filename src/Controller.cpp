@@ -20,16 +20,16 @@ Controller::~Controller() {
 }
 
 void Controller::init() {
+    if(auto board1 = getBoard1()) {
+        m_view->init(board1->getBoard(), board1->getShips(), 
+            board1->getColumns(), board1->getRows());
+        m_view->show(board1->getInitBoard());
+    }
+
     while (true && !m_gameOver) {
         if (auto board1 = getBoard1()) {
             std::shared_ptr<IInputController> m_inputController = 
             std::make_shared<InputConsoleController>(board1->getRows(), board1->getColumns());
-    
-            m_view->init(board1->getBoard(), board1->getShips(), 
-                board1->getColumns(), board1->getRows());
-            //m_view->show(board1->getInitBoard());
-            /*m_view->show(board1->getBoard(), board1->getShips(), 
-                board1->getColumns(), board1->getRows());*/
     
             m_inputController->startInput(Constants::str_player1);
             int row = m_inputController->getRow();
@@ -38,7 +38,6 @@ void Controller::init() {
             board1->attack(row, column);
             m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
                 board1->getColumns(), board1->getRows());
-            //m_view->updateView(board1->getBoard(), board1->getShips());
 
             m_gameOver = board1->isShipsDestroyed();
         }
