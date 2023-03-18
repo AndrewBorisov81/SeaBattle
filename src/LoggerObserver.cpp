@@ -2,11 +2,13 @@
 
 #include <iostream>
 
- LoggerObserver::LoggerObserver(std::shared_ptr<ISubject> subject) {
-
+ LoggerObserver::LoggerObserver(std::shared_ptr<ISubject> subject) 
+     : m_subject{subject}
+ {
+    m_subject->attach(this);
  }
  LoggerObserver::~LoggerObserver() {
-
+    m_subject->detach(this);
  }
 
 void LoggerObserver::update(const std::vector<std::shared_ptr<Cell>>& board,
