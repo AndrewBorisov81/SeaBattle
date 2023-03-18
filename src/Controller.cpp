@@ -5,10 +5,10 @@
 #include <string>
 #include <iostream>
 
- Controller::Controller(std::unique_ptr<Model> model, 
+ Controller::Controller(std::shared_ptr<Model> model, 
     std::unique_ptr<View> view)
     : m_view{std::move(view)},
-      m_model{std::move(model)}, 
+      m_model{model}, 
       m_currentPlayer{Controller::Player::player1},
       m_gameOver{false}
 {

@@ -1,13 +1,16 @@
 #pragma once
 #include "Observer.h"
-#include "Controller.h"
+#include "IObserver.h"
 
-class ControllerObserver : public Observer, private Controller {
+#include <vector>
+
+class ControllerObserver : public IObserver {
 public:
     ControllerObserver() = default;
-    ControllerObserver(std::shared_ptr<ISubject> subject,
-        std::unique_ptr<Model> model, std::unique_ptr<View> view);
-    virtual ~ControllerObserver() = default;
-    void update(const GameBoard::CellsList& board,
-    const GameBoard::ShipsList& ships, int rows, int columns) override;
+    ControllerObserver(std::shared_ptr<ISubject> subject);
+    virtual ~ControllerObserver();
+    virtual void update(const std::vector<std::shared_ptr<Cell>>& board,
+        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
+private:
+    std::shared_ptr<ISubject> m_subject;
 };

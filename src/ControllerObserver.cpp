@@ -1,17 +1,22 @@
 #include "ControllerObserver.h"
 
-ControllerObserver::ControllerObserver(std::shared_ptr<ISubject> subject,
-    std::unique_ptr<Model> model, std::unique_ptr<View> view)
-    :   Observer(subject),
-        Controller(std::move(model), std::move(view))
-{
+#include <memory>
 
+ControllerObserver::ControllerObserver(std::shared_ptr<ISubject> subject)
+    : m_subject{subject} 
+{
+    m_subject->attach(this);
 }
 
-void ControllerObserver::update(const GameBoard::CellsList& board,
-    const GameBoard::ShipsList& ships, int rows, int columns)
+ControllerObserver::~ControllerObserver() {
+    m_subject->detach(this);
+}
+
+void ControllerObserver::update(const std::vector<std::shared_ptr<Cell>>& board,
+    const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns)
 {
-    if(m_view) {
+    bool stop = true;
+    /*if(m_view) {
         m_view->updateView(board, ships);
-    }
+    }*/
 }

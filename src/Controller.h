@@ -10,7 +10,7 @@ class Controller {
     enum class Player{ player1, player2 };
 public:
     Controller() = default;
-    Controller(std::unique_ptr<Model> model, 
+    Controller(std::shared_ptr<Model> model, 
     std::unique_ptr<View> view);
     virtual ~Controller();
     // when application start
@@ -21,7 +21,7 @@ protected:
     std::unique_ptr<View> m_view;
 
 private:
-    std::unique_ptr<Model> m_model;
+    std::shared_ptr<Model> m_model;
     std::unique_ptr<IInputController> m_inputController;
     Controller::Player m_currentPlayer;
     bool m_gameOver;

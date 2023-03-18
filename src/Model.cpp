@@ -21,5 +21,10 @@ void Model::setSubject(std::shared_ptr<ISubject> subject) {
 void Model::updatedBoardData(const std::vector<std::shared_ptr<Cell>>& board,
     const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns) 
 {
-    m_subject->notify(board, ships, rows, columns);    
+    if(m_subject) {
+        m_subject->notify(board, ships, rows, columns);
+    } else {
+        
+    }
 }
+
