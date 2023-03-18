@@ -55,7 +55,7 @@ int main()
     std::unique_ptr<IObserver> loggerObserver = 
         std::make_unique<LoggerObserver>(subject);
     std::unique_ptr<IObserver> viewObserver =
-        std::make_unique<ViewObserver>(subject);
+        std::make_unique<ViewObserver>(subject, view);
 
     std::unique_ptr<Controller> controller = 
         std::make_unique<Controller>(std::move(model), view);
