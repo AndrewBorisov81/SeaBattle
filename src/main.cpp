@@ -11,8 +11,8 @@
 #include "View.h"
 #include "Controller.h"
 #include "Subject.h"
-//#include "Observer.h"
 #include "ControllerObserver.h"
+#include "LoggerObserver.h"
 #include "ModelSubject.h"
 
 // Test
@@ -48,8 +48,10 @@ int main()
     model->setSubject(subject);
     std::unique_ptr<View> view = std::make_unique<View>();
 
-    std::unique_ptr<IObserver> observer = 
+    std::unique_ptr<IObserver> controllerObserver = 
         std::make_unique<ControllerObserver>(subject);
+    std::unique_ptr<IObserver> loggerObserver = 
+        std::make_unique<LoggerObserver>(subject);
     std::unique_ptr<Controller> controller = 
         std::make_unique<Controller>(std::move(model), std::move(view));
 }
