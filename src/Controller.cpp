@@ -6,7 +6,7 @@
 #include <iostream>
 
  Controller::Controller(std::shared_ptr<Model> model, 
-    std::unique_ptr<View> view)
+    std::unique_ptr<IView> view)
     : m_view{std::move(view)},
       m_model{model}, 
       m_currentPlayer{Controller::Player::player1},

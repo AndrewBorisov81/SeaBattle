@@ -106,4 +106,3 @@ const char* View::getShipChar(std::shared_ptr<Cell> cell) {
     }
     return ch;
 }
-

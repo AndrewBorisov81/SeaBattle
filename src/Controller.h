@@ -1,7 +1,7 @@
 #pragma once
 #include "Observer.h"
 #include "Model.h"
-#include "View.h"
+#include "IView.h"
 #include "IInputController.h"
 
 #include <memory>
@@ -11,14 +11,14 @@ class Controller {
 public:
     Controller() = default;
     Controller(std::shared_ptr<Model> model, 
-    std::unique_ptr<View> view);
+    std::unique_ptr<IView> view);
     virtual ~Controller();
     // when application start
     void init();
     void updateData();
 
 protected:
-    std::unique_ptr<View> m_view;
+    std::unique_ptr<IView> m_view;
 
 private:
     std::shared_ptr<Model> m_model;

@@ -12,12 +12,14 @@ public:
         const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
     virtual ~View() = default;
     bool init(const std::vector<std::shared_ptr<Cell>>& board, 
-        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
+        const std::vector<std::shared_ptr<Ship>>& ships, 
+            int rows, int columns) override;
     void updateView(const std::vector<std::shared_ptr<Cell>>& board,
-         const std::vector<std::shared_ptr<Ship>>& ships);
-    void show(const std::vector<std::shared_ptr<Cell>>& board);
+         const std::vector<std::shared_ptr<Ship>>& ships) override;
+    void show(const std::vector<std::shared_ptr<Cell>>& board) override;
     void show(const std::vector<std::shared_ptr<Cell>>& board, 
-        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
+        const std::vector<std::shared_ptr<Ship>>& ships, 
+            int rows, int columns) override;
     void clear();
 
 private:

@@ -9,6 +9,7 @@
 #include "GameBoard.h"
 #include "Model.h"
 #include "View.h"
+#include "IView.h"
 #include "Controller.h"
 #include "Subject.h"
 #include "ControllerObserver.h"
@@ -46,12 +47,13 @@ int main()
     model->init(std::get<static_cast<int>(InitData::field)>(levelParsedData),  
     std::get<static_cast<int>(InitData::ships)>(levelParsedData));
     model->setSubject(subject);
-    std::unique_ptr<View> view = std::make_unique<View>();
+    std::unique_ptr<IView> view = std::make_unique<View>();
 
     std::unique_ptr<IObserver> controllerObserver = 
         std::make_unique<ControllerObserver>(subject);
     std::unique_ptr<IObserver> loggerObserver = 
         std::make_unique<LoggerObserver>(subject);
+
     std::unique_ptr<Controller> controller = 
         std::make_unique<Controller>(std::move(model), std::move(view));
 }
