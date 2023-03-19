@@ -8,7 +8,7 @@ class Observer : public IObserver {
 public:
     //Observer(Subject& subject);
     Observer() = default;
-    Observer(std::shared_ptr<ISubject> subject);
+    explicit Observer(std::shared_ptr<ISubject> subject);
     virtual ~Observer();
     virtual void update(const std::vector<std::shared_ptr<Cell>>& board,
     const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns) override;

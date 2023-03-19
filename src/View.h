@@ -8,23 +8,23 @@
 class View : public IView {
 public:
     View() = default;
-    View(const std::vector<std::shared_ptr<Cell>>& board, 
-        const std::vector<std::shared_ptr<Ship>>& ships, int rows, int columns);
+    View(const CellsList& board, 
+        const ShipsList& ships, int rows, int columns);
     virtual ~View() = default;
-    bool init(const std::vector<std::shared_ptr<Cell>>& board, 
-        const std::vector<std::shared_ptr<Ship>>& ships, 
+    bool init(const CellsList& board, 
+        const ShipsList& ships, 
             int rows, int columns) override;
-    void updateView(const std::vector<std::shared_ptr<Cell>>& board,
-         const std::vector<std::shared_ptr<Ship>>& ships) override;
-    void show(const std::vector<std::shared_ptr<Cell>>& board) override;
-    void show(const std::vector<std::shared_ptr<Cell>>& board, 
-        const std::vector<std::shared_ptr<Ship>>& ships, 
+    void updateView(const CellsList& board,
+         const ShipsList& ships) override;
+    void show(const CellsList& board) override;
+    void show(const CellsList& board, 
+        const ShipsList& ships, 
             int rows, int columns) override;
     void clear();
 
 private:
-   std::vector<std::shared_ptr<Cell>> m_board;
-   std::vector<std::shared_ptr<Ship>> m_ships;
+   CellsList m_board;
+   ShipsList m_ships;
    int m_rows;
    int m_columns;
 

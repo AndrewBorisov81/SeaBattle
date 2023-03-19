@@ -14,5 +14,5 @@ void ShipsLogger::update(const std::vector<std::shared_ptr<Cell>>& board,
         }
     }
     notDestroyedShips = allShips - destroyedShips;
-    std::cout << "All ships: " << allShips << " notDestroydShips: " << notDestroyedShips << '\n'; 
+    std::cout << "All ships: " << allShips << " notDestroyedShips: " << notDestroyedShips << '\n'; 
 }
