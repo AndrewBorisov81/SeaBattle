@@ -1,4 +1,5 @@
 #include "InputConsoleController.h"
+#include "UtilityData.h"
 
 #include <iostream>
 #include <string>
@@ -68,4 +69,8 @@ int InputConsoleController::getInputNumber() {
     std::cout << "The number you entered is: " << number << std::endl;
     
     return number;
+}
+
+const Point& InputConsoleController::readInput() {
+    //return Point(0, 0);
 }

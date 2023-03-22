@@ -6,8 +6,11 @@
 
 #include <memory>
 
+class Point;
+
 class Controller {
     enum class Player{ player1, player2 };
+    enum class State{ init, playerOneTurn, playerTwoTurn, GameOver };
 public:
     Controller() = default;
     Controller(std::shared_ptr<Model> model, 
@@ -25,10 +28,13 @@ private:
     std::unique_ptr<IInputController> m_inputController;
     Controller::Player m_currentPlayer;
     bool m_gameOver;
+    State m_state;
 
     std::shared_ptr<GameBoard> getBoard1() const;
     std::shared_ptr<GameBoard> getBoard2() const;
+    void changeState(State state);
     void changePlayer();
     bool checkGameOver();
     void gameOver();
+    const Point& readInput(Player player);
 };

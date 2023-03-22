@@ -12,6 +12,7 @@ public:
     virtual void stopInput() override;
     virtual int getRow() const override;
     virtual int getColumn() const override;
+    virtual const Point& readInput() override;
 private:
   int m_rows;
   int m_columns;
