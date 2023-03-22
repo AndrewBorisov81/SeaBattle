@@ -71,6 +71,6 @@ int InputConsoleController::getInputNumber() {
     return number;
 }
 
-const Point& InputConsoleController::readInput() {
-    //return Point(0, 0);
+Position InputConsoleController::readInput() {
+    return { m_inputRow, m_inputColumn };
 }
