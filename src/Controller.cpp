@@ -11,7 +11,8 @@
       m_model{model}, 
       m_currentPlayer{Controller::Player::player1},
       m_gameOver{false},
-      m_state{State::init}
+      m_state{State::init},
+      m_winPlayer{Constants::str_player1}
 {
     init();
     changeState(State::playerOneTurn);
@@ -30,26 +31,10 @@ void Controller::init() {
         m_inputController = 
             std::make_unique<InputConsoleController>(board1->getRows(), board1->getColumns());
     }
-
-    /*int row, column;
-    while (true && !m_gameOver) {
-        if(m_inputController) {
-            m_inputController->startInput(Constants::str_player1);
-            row = m_inputController->getRow();
-            column = m_inputController->getColumn();
-        }
-
-        if (auto board1 = getBoard1()) {
-            board1->attack(row, column);
-            m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
-                board1->getColumns(), board1->getRows());
-
-            m_gameOver = board1->isShipsDestroyed();
-        }
-    }*/
 }
 
 void Controller::changeState(State state) {
+    
     m_state = state;
     switch (state) {
         case State::init:
@@ -73,8 +58,9 @@ void Controller::changeState(State state) {
 
                 m_gameOver = board1->isShipsDestroyed();
                 
-                if(m_gameOver) {
+                if (m_gameOver) {
                     m_state = State::GameOver;
+                    m_winPlayer = Constants::str_player1;
                     changeState(m_state);
                 } else {
                     m_state = State::playerTwoTurn;
@@ -101,8 +87,9 @@ void Controller::changeState(State state) {
 
                 m_gameOver = board2->isShipsDestroyed();
 
-                if(m_gameOver) {
+                if (m_gameOver) {
                     m_state = State::GameOver;
+                    m_winPlayer = Constants::str_player2;
                     changeState(m_state);
                 } else {
                     m_state = State::playerOneTurn;
@@ -114,6 +101,8 @@ void Controller::changeState(State state) {
             break;
 
         case State::GameOver:
+            std::cout << m_winPlayer << " Win!" << '\n';
+            std::cout << "Game Over!" << '\n';
             break;
     
         default:
@@ -130,7 +119,7 @@ std::shared_ptr<GameBoard> Controller::getBoard2() const {
 }
 
 void Controller::changePlayer() {
-    if(m_currentPlayer == Controller::Player::player1) {
+    if (m_currentPlayer == Controller::Player::player1) {
         m_currentPlayer = Controller::Player::player2;
     } else {
         m_currentPlayer = Controller::Player::player1;

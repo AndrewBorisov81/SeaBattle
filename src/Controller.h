@@ -29,6 +29,7 @@ private:
     Controller::Player m_currentPlayer;
     bool m_gameOver;
     State m_state;
+    std::string m_winPlayer;
 
     std::shared_ptr<GameBoard> getBoard1() const;
     std::shared_ptr<GameBoard> getBoard2() const;
