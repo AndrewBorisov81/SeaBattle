@@ -22,7 +22,7 @@ Controller::~Controller() {
 }
 
 void Controller::init() {
-    if(auto board1 = getBoard1()) {
+    if (auto board1 = getBoard1()) {
         m_view->init(board1->getBoard(), board1->getShips(), 
             board1->getColumns(), board1->getRows());
         m_view->show(board1->getInitBoard());
@@ -33,13 +33,13 @@ void Controller::init() {
 
     int row, column;
     while (true && !m_gameOver) {
-        if (auto board1 = getBoard1()) {
-            if(m_inputController) {
+        if(m_inputController) {
                   m_inputController->startInput(Constants::str_player1);
                   row = m_inputController->getRow();
                   column = m_inputController->getColumn();
-            }
-    
+        }
+        
+        if (auto board1 = getBoard1()) {
             board1->attack(row, column);
             m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
                 board1->getColumns(), board1->getRows());
