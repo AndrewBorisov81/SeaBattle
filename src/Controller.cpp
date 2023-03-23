@@ -31,14 +31,14 @@ void Controller::init() {
             std::make_unique<InputConsoleController>(board1->getRows(), board1->getColumns());
     }
 
-    int row, column;
+    /*int row, column;
     while (true && !m_gameOver) {
         if(m_inputController) {
-                  m_inputController->startInput(Constants::str_player1);
-                  row = m_inputController->getRow();
-                  column = m_inputController->getColumn();
+            m_inputController->startInput(Constants::str_player1);
+            row = m_inputController->getRow();
+            column = m_inputController->getColumn();
         }
-        
+
         if (auto board1 = getBoard1()) {
             board1->attack(row, column);
             m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
@@ -46,7 +46,7 @@ void Controller::init() {
 
             m_gameOver = board1->isShipsDestroyed();
         }
-    }
+    }*/
 }
 
 void Controller::changeState(State state) {
@@ -58,17 +58,59 @@ void Controller::changeState(State state) {
             break;
 
         case State::playerOneTurn:
-            if (auto board1 = getBoard1()) {
+        {
+            int row, column;
+            if(m_inputController) {
+                m_inputController->startInput(Constants::str_player1);
+                row = m_inputController->getRow();
+                column = m_inputController->getColumn();
             }
-            changePlayer();
-            m_state = State::playerTwoTurn;
+
+            if (auto board1 = getBoard1()) {
+                board1->attack(row, column);
+                m_model->updatedBoardData(board1->getBoard(), board1->getShips(), 
+                board1->getColumns(), board1->getRows());
+
+                m_gameOver = board1->isShipsDestroyed();
+                
+                if(m_gameOver) {
+                    m_state = State::GameOver;
+                    changeState(m_state);
+                } else {
+                    m_state = State::playerTwoTurn;
+                    changePlayer();
+                    changeState(m_state);
+                } 
+            }
+        }
             break;
 
         case State::playerTwoTurn:
-         if (auto board2 = getBoard2()) {
+        {
+            int row, column;
+            if(m_inputController) {
+                m_inputController->startInput(Constants::str_player2);
+                row = m_inputController->getRow();
+                column = m_inputController->getColumn();
             }
-            changePlayer(); 
-            m_state = State::playerOneTurn;
+
+            if (auto board2 = getBoard2()) {
+                board2->attack(row, column);
+                m_model->updatedBoardData(board2->getBoard(), board2->getShips(), 
+                board2->getColumns(), board2->getRows());
+
+                m_gameOver = board2->isShipsDestroyed();
+
+                if(m_gameOver) {
+                    m_state = State::GameOver;
+                    changeState(m_state);
+                } else {
+                    m_state = State::playerOneTurn;
+                    changePlayer();
+                    changeState(m_state);
+                } 
+            }
+        }
             break;
 
         case State::GameOver:

@@ -26,10 +26,10 @@ void InputConsoleController::startInput(const std::string& player) {
    m_startInput = true;
    int row{}, column{};
 
-   std::cout << "Choose a row. ";
+   std::cout << player << " choose a row. ";
    row = InputConsoleController::getInputNumber();
 
-   std::cout << "Choose a column. ";
+   std::cout << player << " choose a column. ";
    column = InputConsoleController::getInputNumber();
    
    m_inputRow = row;
