@@ -36,5 +36,5 @@ private:
     void changePlayer();
     bool checkGameOver();
     void gameOver();
-    const Point& readInput(Player player);
+    Position readInput();
 };

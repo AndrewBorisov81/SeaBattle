@@ -14,6 +14,7 @@
       m_state{State::init}
 {
     init();
+    changeState(State::playerOneTurn);
 }
 
 Controller::~Controller() {
@@ -106,4 +107,8 @@ bool Controller::checkGameOver() {
 
 void Controller::gameOver() {
     std::cout << "Game Over!" << '\n';
+}
+
+Position Controller::readInput() {
+    return { 0, 0 };
 }
